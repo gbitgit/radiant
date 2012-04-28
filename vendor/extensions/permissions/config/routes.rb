@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :data_filters,  :member => { :inactive => :post, :remove => :get} , :active_scaffold => true
     admin.resources :data_permissions,:member => { :delete => :post}, :active_scaffold => true
 
-    admin.resources :security_functions, :active_scaffold => true
+    admin.resources :ctrl_filters, :active_scaffold => true
     admin.resources :ctrl_permissions, :active_scaffold => true
 
     admin.resources :categories,    :member => { :pick => :post}
