@@ -1,2 +1,0 @@
-module RadiantExporterExtension
-end
