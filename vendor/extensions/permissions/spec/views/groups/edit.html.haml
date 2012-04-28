@@ -1,0 +1,6 @@
+%h1.group_name= "Edit #{@group.code}"
+= render :partial => 'form'
+      
+%p.buttons
+  = t('permissions_extension.delete_warning')
+  = link_to t('permissions_extension.delete_confirm'), admin_group_path(@group), :method => :delete

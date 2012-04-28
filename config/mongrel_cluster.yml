@@ -1,0 +1,9 @@
+---
+port: '3000'
+servers: 2
+pid_file: /www/radiant/log/mongrel.pid
+log_file: log/mongrel.log
+debug: false
+address: 127.0.0.1
+environment: development
+cwd: /www/radiant

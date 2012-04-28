@@ -1,0 +1,7 @@
+- @page_title = t('part_types') + ' - ' + default_page_title
+
+.outset
+  = render :partial => 'list'
+  #actions
+    %ul
+      %li= link_to image('plus') + " " + t('new_part_type'), new_admin_part_type_url

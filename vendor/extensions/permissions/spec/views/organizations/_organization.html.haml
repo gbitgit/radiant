@@ -1,0 +1,11 @@
+%tr.node
+  %td.layout
+    - if organization
+      %span.code
+        = image('../extensions/settings/setting.png', :alt => '')
+        = link_to organization.code.humanize, edit_admin_organization_path(organization), :title => organization.code
+    - else
+      %span.title.label= code.humanize
+  %td
+    - if organization
+      = organization.code

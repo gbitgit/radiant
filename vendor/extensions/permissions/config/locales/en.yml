@@ -1,0 +1,39 @@
+---
+en:
+  application: Application
+  permissions_extension:
+    notices:
+      create:
+        success: The permission %{permission} was saved
+      destroy:
+        success: The permission %{permission} was deleted
+    permission:
+      code: permission code
+      controller: app controller
+      method: method
+    group:
+      id: ID
+      code: User group
+      desc: Description
+      new:
+        title: New Radiant user group
+        code: User group
+        desc: Description
+        create_group: Create user group
+      inactive: Inactive
+      remove: Remove
+    user_group:
+      group_id: group ID
+      user_id: user ID
+    or: or
+    cancel: Cancel
+    delete_warning: This system relies on some of these data_permissions to work properly. Deleting data_permissions may cause unexpected errors.
+    delete_confirm: I understand. Delete this permission entirely.
+    new_permission: New permission
+    pages:
+      new:
+        title: New Radiant permission
+        name: permission Name
+        value: permission Value
+        description: permission Description
+        create_permission: Create permission

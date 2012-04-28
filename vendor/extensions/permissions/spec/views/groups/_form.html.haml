@@ -1,0 +1,14 @@
+- form_for :group, :url => admin_groups_path, :html => {'data-onsubmit_status' => onsubmit_status(@group)} do |f|
+  .form_area
+    %p.title
+      = f.label :code, t('permissions_extension.group.code')
+      = f.text_field :code, :class => 'textbox activate', :maxlength => 64
+    %p.title
+      = f.label :desc, t('permissions_extension.group.desc')
+      = f.text_field :desc, :class => 'textbox'
+
+    %p.buttons{:style=>"clear: left"}
+      = save_model_button(@group)
+      = save_model_and_continue_editing_button(@group)  # does not return to edit page
+      = t('or')
+      = link_to t('cancel'), admin_groups_url

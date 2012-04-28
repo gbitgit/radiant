@@ -1,0 +1,6 @@
+%h1.setting_name= "Edit #{@setting.key}"
+= render :partial => 'form'
+      
+%p.buttons
+  = t('settings_extension.delete_warning')
+  = link_to t('settings_extension.delete_confirm'), admin_setting_path(@setting), :method => :delete

@@ -1,0 +1,6 @@
+%h1.filter_name= "Edit #{@data_filter.code}"
+= render :partial => 'form'
+      
+%p.buttons
+  = t('permissions_extension.delete_warning')
+  = link_to t('permissions_extension.delete_confirm'), admin_data_filter_path(@data_filter), :method => :delete

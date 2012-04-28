@@ -1,0 +1,15 @@
+- form_for :data_permission, :url => admin_data_permissions_path, :html => {'data-onsubmit_status' => onsubmit_status(@data_permission)} do |f|
+  .form_area
+    %p.title
+      = f.label :code, t('data_permissions_extension.data_permission.code')
+      = f.text_field :code, :class => 'textbox activate', :maxlength => 64
+    %p.title
+      = f.label :desc, t('data_permissions_extension.data_permission.controller')
+      = f.text_field :desc, :class => 'textbox activate', :maxlength => 64
+
+
+    %p.buttons{:style=>"clear: left"}
+      = save_model_button(@data_permission)
+      = save_model_and_continue_editing_button(@data_permission)  # does not return to edit page
+      = t('or')
+      = link_to t('cancel'), admin_data_permissions_url

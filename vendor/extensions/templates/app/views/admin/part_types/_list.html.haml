@@ -1,0 +1,23 @@
+%table.index#part_types
+  %thead
+    %tr
+      %th.part_type_name= t('name')
+      %th.type= t('field_type')
+      %th.class= t('field_class')
+      %th.styles= t('field_styles')
+      %th.actions{:style=>"width:9em"}= t('modify')
+  %tbody
+    - if @part_types.any?
+      - @part_types.each do |part_type|
+        %tr[part_type]
+          %td.name
+            = image('part_type', :alt => '')
+            = link_to part_type.name, edit_admin_part_type_url(part_type)
+          %td.type= part_type.field_type
+          %td.class= part_type.field_class
+          %td.styles= part_type.field_styles
+          %td.actions
+            = link_to image('minus') + ' ' + t('remove'), remove_admin_part_type_url(part_type), :class => "action"
+    - else
+      %tr
+        %td.empty{:colspan => admin.part_type.index.tbody.length}= t('no_part_types')

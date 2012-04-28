@@ -1,0 +1,50 @@
+<h2>List Country</h2>
+
+<script type="text/javascript" charset="utf-8">
+  jQuery.fn.extend({
+    flexLoadUrl: function(load_url) {
+      return this.flexOptions({url: load_url, newp: 1}).flexReload();
+    }
+  });
+
+  $(document).ready(function() {
+    $("#dir_tree").treeview({
+      animated: "fast",
+      collapsed: true,
+      unique: true,
+    });
+
+    $("#iso_list").flexigrid( {
+      url: '',
+      dataType: 'json',
+      method: 'GET',
+      colModel : [
+         {display: 'iso', name : 'iso', width : 220, sortable : true, align: 'left'},
+         {display: 'numcode', name : 'numcode', width : 70, sortable : true, align: 'right'},
+         {display: 'name', name : 'name', width: 180, sortable : true, align: 'center'},
+         ],
+      sortname: "name",
+      sortorder: "asc",
+      usepager: true,
+      useRp: true,
+      rp: 10,
+      width: "auto",
+      height: "auto",
+      showToggleBtn: false,
+      pagestat: '{from} 〜 {to} blabla　( bla {total})',
+      procmsg: 'processing ...',
+    });
+
+    $('#iso_area').hide();
+  });
+</script>
+
+<div id="dir_area" style="margin-left: 10px; float:left; width: 240px;">
+  <h4 style="margin: 0 0 10px 0;">tree</h4>
+  <%= tree_view @category, :id=>"dir_tree", :class=>"isotree", :span_class=>"folder", :list_id=>"iso_list" %>
+</div>
+
+<div id="iso_area" style="margin-left: 240px; padding-right:60px;">
+  <h4 style="margin: 0 0 10px 0;"></h4>
+  <table id="iso_list"></table>
+</div>

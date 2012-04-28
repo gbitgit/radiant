@@ -1,0 +1,9 @@
+---
+port: '3000'
+servers: 2
+pid_file: /www/radiant/tmp/pids/mongrel.pid.Time.now
+log_file: /www/radiant/log/mongrel.log
+debug: false
+address: 127.0.0.1
+environment: production
+cwd: /www/radiant

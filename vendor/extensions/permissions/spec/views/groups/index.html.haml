@@ -1,0 +1,30 @@
+- include_javascript 'admin/ruledtable'
+
+.outset
+  = render_region :top
+  - render_region :main do |main|
+    - main.list do
+      %table.index#groups
+        %thead
+          %tr
+            %th.id{:style=>"width:1em"}= t('permissions_extension.group.id')
+            %th.code{:style=>"width:10em"}= t('permissions_extension.group.code')
+            %th.desc{:style=>"width:30em"}= t('permissions_extension.group.desc')
+            %th.actions{:style=>"width:9em"}= t('modify')
+        %tbody
+          - if @groups.any?
+            - @groups.each do |group|
+              %tr[group]
+                %td.id{:style => "width:1em;white-space: nowrap"}=link_to group.id,edit_admin_group_url(group.id)
+                %td.code{:style => "width:10em;white-space: nowrap"}=link_to group.code,edit_admin_group_url(group.id)
+                %td.desc{:style=>"width:30em"}=group.desc
+                %td.actions{:style => "float: left;width:9em"}=action_links(group)
+          - else
+            %tr
+              %td.empty{:colspan => admin.group.index.tbody.length}= t('permissions_extension.group.no_groups')
+
+- render_region :bottom do |bottom|
+  - bottom.new_button do
+    #actions
+      %ul
+        %li= link_to image('plus') + " " + t('permissions_extension.group.new.create_group'), new_admin_group_url

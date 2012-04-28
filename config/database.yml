@@ -1,0 +1,34 @@
+#
+# This is only an example configuration. Please see the Rails
+# documentation for more details.
+#
+
+development:
+  adapter: postgresql
+  database: pr_radiant_dev
+  username: postgres
+  password: 123456
+  host: localhost
+  schema_search_path: public
+#crm,radiant,ext,public,secure
+  
+test: &TEST
+  adapter: postgresql
+  database: pr_radiant_test
+  username: postgres
+  password: 123456
+  host: localhost
+  schema_search_path: public
+#crm,radiant,ext,public,secure
+
+production:
+  adapter: postgresql
+  database: pr_radiant_prod
+  username: postgres
+  password: 123456
+  host: localhost
+  schema_search_path: public
+#crm,radiant,ext,public,secure
+  
+cucumber:
+  <<: *TEST

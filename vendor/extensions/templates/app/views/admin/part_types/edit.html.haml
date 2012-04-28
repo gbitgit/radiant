@@ -1,0 +1,5 @@
+%h1= t('edit_part_type')
+= render :partial => 'form'
+#actions
+  %ul
+    %li= link_to image('plus') + " " + t('new_part_type'), new_admin_part_type_url

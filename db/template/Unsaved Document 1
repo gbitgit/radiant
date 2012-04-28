@@ -1,0 +1,157 @@
+# this shows one way to use rails templates to create
+# custom radiant instances tailored for a particular use
+# usage:
+# => rails blog -m http://gist.github.com/149713.txt
+# => cd blog
+# => script/server
+
+# turn a rails project into a radiant project
+run "rm -r README config/environments/development.rb config/environments/production.rb config/environments/test.rb public/404.html public/500.html public/index.html public/robots.txt script/about script/console script/runner script/server script/generate config/database.yml Rakefile config/routes.rb config/environment.rb config/boot.rb app doc lib test tmp config/initializers config/locales script/destroy script/plugin"
+run "sudo gem install radiant" if `gem list radiant`.strip.length == 0
+run "radiant -d sqlite3 ."
+rake "radiant:freeze:edge TAG=0.8.0"
+
+# don't need different production and development dbs
+run "rm config/database.yml"
+file 'config/database.yml',
+%q{development:
+adapter: sqlite3
+database: db/radiant.db
+
+test:
+adapter: sqlite3
+database: db/test.sqlite3.db
+
+production:
+adapter: sqlite3
+database: db/radiant.db
+}
+
+# bootstrap an empty radiant
+rake "db:bootstrap ADMIN_NAME=Administrator ADMIN_USERNAME=admin ADMIN_PASSWORD=radiant DATABASE_TEMPLATE=vendor/radiant/db/templates/empty.yml OVERWRITE=true"
+
+# install extension dependencies
+puts "=============================================================================="
+puts "Installing fastercsv, will_paginate and image_science."
+puts "You may be prompted for your system administrator password."
+puts "=============================================================================="
+# => comments
+run "sudo gem install fastercsv" if `gem list fastercsv`.strip.length == 0
+run "sudo gem install will_paginate" if `gem list will_paginate`.strip.length == 0
+# => page_attachments - only works with apt-get or port
+if `which apt-get`.strip.include?("apt-get")
+  run "sudo apt-get install libfreeimage3 libfreeimage3-dev"
+  run "sudo gem install image_science" if `gem list image_science`.strip.length == 0
+elsif `which port`.strip.include?("port")
+  run "sudo port install freeimage"
+  run "sudo gem install image_science" if `gem list image_science`.strip.length == 0
+elsif `which convert`.strip.include?("convert")
+  run "sudo gem install mini_magick"
+else
+  puts "You don't have a recognized package manager or ImageMagick."
+  puts "The page_attachments extension will not support thumbnails."
+end
+
+# install extensions
+run "script/extension install ray"
+extensions = [
+  "name=aggregation",
+  "name=blog",
+  "name=blog_tags",
+  "name=radiant-comments",
+  "name=copy-move",
+  "name=enkoder_tags",
+  "name=help",
+  "name=page-preview",
+  "name=seo_help",
+  "name=settings",
+  "name=sns fullname=radiant-sns-extension hub=radiant",
+  "name=sns-sass-filter",
+  "name=sns-minifier fullname=radiant-sns-minifier-extension hub=Aissac",
+  "name=textile_editor",
+  "name=truncate",
+  "name=wmd-filter"
+]
+extensions.each { |e| rake "ray:i #{e}" }
+# page attachments installs from a 0.8.0 branch so just do it manually
+run "git clone git://github.com/radiant/radiant-page-attachments-extension.git vendor/extensions/page_attachments"
+inside "vendor/extensions/page_attachments" do
+  run "git checkout -b 0.8.0 origin/radiant-0.8.0"
+end
+rake "radiant:extensions:page_attachments:migrate"
+rake "radiant:extensions:page_attachments:update"
+
+# fix up failed extension installations
+# => textile_editor
+rake "ray:e name=textile_editor"
+run "rm vendor/extensions/textile_editor/textile_editor_extension.rb"
+file 'vendor/extensions/textile_editor/textile_editor_extension.rb',
+%q{# Uncomment this if you reference any of your controllers in activate
+require_dependency 'application_controller'
+
+class TextileEditorExtension < Radiant::Extension
+version "2.0"
+description "Places a toolbar above the textarea when Textile is the current input filter."
+url "http://yourwebsite.com/textile_editor"
+define_routes do |map|
+map.connect 'admin/textile_editor/:action', :controller => 'admin/textile_editor'
+end
+def activate
+ApplicationController.send :include, TextileEditor::Ext::ApplicationController
+Admin::PagesHelper.send :include, TextileEditor::Ext::Admin::PagesHelper
+Page.send :include, TextileEditor::PageExtensions
+[Admin::PagesController, Admin::SnippetsController].each do |c|
+c.send :before_filter, :include_textile_editor_assets
+end
+[:pages, :snippet].each do |controller|
+admin.send(controller).edit.add :main, 'admin/pages/link_popup'
+admin.send(controller).edit.add :main, 'admin/pages/image_popup'
+end
+end
+def deactivate
+end
+end
+}
+rake "radiant:extensions:textile_editor:migrate"
+rake "radiant:extensions:textile_editor:update"
+# => truncate
+rake "ray:e name=truncate"
+run "rm vendor/extensions/truncate/truncate_extension.rb"
+file 'vendor/extensions/truncate/truncate_extension.rb',
+%q{require 'application_controller'
+
+class TruncateExtension < Radiant::Extension
+version "0.1"
+description "Adds truncate tag to Radiant for truncating data within the tag"
+define_routes do |map|
+end
+def activate
+Page.send :include, TruncateTags
+end
+def deactivate
+end
+end
+}
+rake "radiant:extensions:truncate:migrate"
+rake "radiant:extensions:truncate:update"
+
+# config gems
+# => the environment method was lifted from rails template_runner.rb but
+# => the sentinel variable is set to "Radiant::Initializer.run do |config|"
+def environment(data = nil, options = {}, &block)
+  sentinel = 'Radiant::Initializer.run do |config|'
+  data = block.call if !data && block_given?
+  in_root do
+    if options[:env].nil?
+      gsub_file 'config/environment.rb', /(#{Regexp.escape(sentinel)})/mi do |match|
+        "#{match}\n " << data
+      end
+    else
+      Array.wrap(options[:env]).each do|env|
+        append_file "config/environments/#{env}.rb", "\n#{data}"
+      end
+    end
+  end
+end
+gem 'fastercsv'
+gem 'will_paginate'

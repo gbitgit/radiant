@@ -1,0 +1,123 @@
+h1. Templates
+
+The Templates extension provides internal structure to Radiant pages which adds an extra layer
+of flexibility in Layout development.  This allows my one Layout to serve as a wireframe for the entire site, with many different page designs filling the "content well."  I now only need a single <r:content /> tag within the Layout to accomplish this.  Thus we simplify and ensure layout consistency in the creation of pages by the end user of the CMS.  
+
+h2. Requirements
+
+The current version of the Templates extension is intended for use with Radiant 0.9.1 or higher, since its UI was made to match the new "Blade" UI of Radiant 9.  It may work with earlier versions, but there are no guarantees.  The "radiant-0.7.1 branch":https://github.com/avonderluft/radiant-templates-extension/tree/radiant-0.7.1  works with Radiant >= 0.7.1 and < 0.9.
+
+h2. Version History
+
+* 1.0.0 - gemified by Andrew vonderLuft, March 2011
+* 0.9 - Radiant 0.9 Blade UI, i18n additions Andrew vonderLuft, January 2011 - 
+* -- Radiant 0.8 compatible, Andrew vonderLuft, May 2010
+* -- Refactored to standard structure under /admin, admin UI for Part Types added, backward compatibility to < 0.8, by Andrew vonderLuft, November 2009, 
+* -- Refactored by Sean Cribbs, August 2008
+* -- Radiant 0.7 Compatible, March 2009 ("radiant-0.7.1 branch":https://github.com/avonderluft/radiant-templates-extension/tree/radiant-0.7.1)
+* -- Created by Sean Cribbs, September 2007
+
+h3. Installation
+
+h4. From github:
+
+* From your Radiant root run:
+
+<pre>git clone git://github.com/avonderluft/radiant-templates-extension.git ./vendor/extensions/templates
+rake radiant:extensions:templates:migrate
+rake radiant:extensions:templates:update
+</pre>
+
+* Restart your radiant app, and you should be good to go.
+
+h4. Using the gem
+
+* Install the gem
+
+<pre>gem install radiant-concurrent_draft-extension</pre>
+
+* Update your Radiant config:  add to environment.rb with other gem.configs
+
+<pre>config.gem 'radiant-concurrent_draft-extension', :lib => false</pre>
+
+h2. Usage
+
+h3. Creating a template
+
+For each new template:
+
+* Add the template parts, specifying the part type, and  their filters. Each part will be editable in the page interface.
+* Create the structure of the page, using the template parts you have created.
+* Specify the Layout and page class that will be used by pages with a given template.
+
+Let's say I want a template for press releases.  Press releases consist of a short description which also serves as the first paragraph, a longer description, a location, contact information, and standard information about the company.  So I would create the new template like so:
+
+h4. The template parts
+
+For each template part, you specify _name_, _description_, _type_ (part type) and _filter_ (formatting filter like Textile or Markdown):
+
+The would be, respectively, for the needed parts:
+
+# Location, City of Origin, One-line, none
+# Short description, Introductory blurb,  One-line, none
+# Long description, The full text of the Press Release, Plain textarea, Textile
+# Contact information, Whom to contact for details, Plain textarea, Textile
+
+h4. The structure
+
+Now you set the structure (which becomes the 'body' page-part) to be something like:
+
+<pre><code>
+<div class="press-release">
+  <p class="contact"><r:content part="Contact information" /></p>
+  <p><strong><r:date format="%d %m %Y"/>,  
+    <r:content part="Location"/></strong> - 
+    <r:content part="Short description"/>
+  </p>
+  <r:content part="Long description" />
+  <r:snippet name="corporate-press-release-blurb" />
+</div>
+</code></pre>
+
+This will not be visible to the Page Editors.  They will only see the Template parts you've defined, along with their descriptions as form field labels.
+
+h4. Layout and Page Type
+
+Finally, at the bottom of the Edit page, set the Layout (normally your standard one), and Page Type according to preference.  These cannot be changed by the Page editors.
+
+h3. Applying a template
+
+h4. Creating a new page
+
+* Click "Add Child" to create a child page an existing page.
+* Dropdown menu appears listing "Blank Page" (no template), and all the currently defined templates.
+* Select the template you wish for the new page.
+* Voilá.  Now just fill in the template-defined page parts.
+
+h4. Changing the template for an existing page
+
+* When editing a page, you will see the Template Selector at the top left, just to the right of the 'Edit Page header.
+* Click this to see all available templates
+* To change to another template, simply select it, and then save the page (Simply selecting it will not change it -- you must save the page).
+
+WARNING: For page parts of your old template, if your new template does a page parts of the same name, then that content will be lost.  This is a good reason to follow naming standards when creating templates, e.g. define a page part "main_content" for all your templates.
+
+h2. Admin
+
+h3. Template Part Types (Admin users only)
+
+h4. Access
+
+Only Admin users have access to create and edit part types.  Default part types should not be removed.  Care should be taken in editing them, since any change to part type will affect every template which uses it, and hence potentially every page which is built with any of those templates.
+
+h4. Management
+
+Each Part type has Name and Field Type (e.g. radio_button, or text_field).  They also have optional Field Class and Field Style, by which the admin user can alter the display characteristics of the parts to the page editors.  
+
+Normally new part types would only be created to refine display characteristics.  For example, you might want a "Small Textarea" part type, which would be exactly the same as the default "Plain Textarea" part type, except that Field Style would have "height:80px".
+
+h2. Acknowledgments
+
+Thanks to Digital Pulp for funding the initial development of this extension
+for use in the Redken project, and to Con-way for funding further
+development.

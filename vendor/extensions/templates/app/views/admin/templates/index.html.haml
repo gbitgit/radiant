@@ -1,0 +1,46 @@
+- include_javascript 'admin/ruledtable'
+
+- @page_title = t('templates') + ' - ' + default_page_title
+
+.outset
+  = render_region :top
+  %table.index#templates
+    %thead
+      %tr
+        - render_region :thead do |thead|
+          - thead.title_header do
+            %th.template_name= t('template')
+          - thead.parts_header do
+            %th.parts= t('parts')
+          - thead.actions_header do
+            %th.actions{:style=>"width:9em"}= t('modify')
+          - thead.order_header do
+            %th.order{:style=>"width:9em"}= t('order')
+    %tbody
+      - if @content_templates.any?
+        - @content_templates.each do |template|
+          %tr[template]
+            - render_region :tbody, :locals => {:template => template} do |tbody|
+              - tbody.title_cell do
+                %td.name{:style => "white-space: nowrap"}
+                  = image('template', :alt => '')
+                  = link_to template.name, edit_admin_template_url(template)
+              - tbody.parts_cell do
+                %td.parts
+                  - template.template_parts.each do |part|
+                    = part.name + ' '
+              - tbody.actions_cell do
+                %td.actions
+                  = link_to image('minus') + ' ' + t('remove'), remove_admin_template_url(template), :class => "action"
+              - tbody.order_cell do
+                %td.order
+                  = order_links(template)  
+      - else
+        %tr
+          %td.empty{:colspan => admin.template.index.tbody.length}= t('no_templates')
+
+- render_region :bottom do |bottom|
+  - bottom.new_button do
+    #actions
+      %ul
+        %li= link_to image('plus') + " " + t('new_template'), new_admin_template_url

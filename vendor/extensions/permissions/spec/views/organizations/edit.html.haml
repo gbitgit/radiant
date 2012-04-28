@@ -1,0 +1,6 @@
+%h1.permission_name= "Edit #{@ctrl_permission.code}"
+= render :partial => 'form'
+      
+%p.buttons
+  = t('permissions_extension.delete_warning')
+  = link_to t('permissions_extension.delete_confirm'), admin_permission_path(@ctrl_permission), :method => :delete

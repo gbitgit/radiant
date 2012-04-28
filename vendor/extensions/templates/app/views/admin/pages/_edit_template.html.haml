@@ -1,0 +1,31 @@
+- if !(@content_template ||= @page.template).blank?
+  = hidden_field_tag "#{page_part_name(0)}[name]", "body", :id => "page_parts_0_name"
+  = hidden_field_tag "#{page_part_name(0)}[filter_id]", nil, :id => "page_parts_0_filter_id"
+  = hidden_field_tag "#{page_part_name(0)}[content]", @content_template.content, :id => "page_parts_0_content"
+  = hidden_field_tag "page[parts_attributes][0][id]", @page.part(:body).try(:[], 'id')
+  - if defined?(ConcurrentDraftExtension)
+    = hidden_field_tag "#{page_part_name(0)}[draft_content]", @content_template.content, :id => 'page_parts_0_draft_content'
+  = hidden_field 'page', 'template_id', :value => @content_template.id
+  = hidden_field 'page', 'layout_id', :value => @content_template.layout_id
+  - unless @content_template.page_class_name.blank?
+    = hidden_field 'page', 'class_name', :value => @content_template.page_class_name
+  - @content_template.template_parts.each_with_index do |part, index|
+    = render :partial => "edit_template_part", :object => part, :locals => {:index => index + 1}
+
+- else
+  = defaults['edit_page_parts']
+  = hidden_field 'page', 'template_id', :value => nil
+
+- content_for :page_css do
+  :sass
+    .template_part
+      padding: 4px 0
+      width: 100%
+      label
+      textarea.textarea
+        display: block
+      input.text
+        display: block
+        padding: 2px 0
+        font-size: 16px
+        width: 500px

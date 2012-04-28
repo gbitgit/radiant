@@ -1,0 +1,11 @@
+%tr.node
+  %td.layout
+    - if permission
+      %span.code
+        = image('../extensions/settings/setting.png', :alt => '')
+        = link_to permission.code.humanize, edit_admin_permission_path(permission), :title => permission.code
+    - else
+      %span.title.label= code.humanize
+  %td
+    - if permission
+      = permission.code

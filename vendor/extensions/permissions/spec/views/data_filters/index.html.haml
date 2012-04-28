@@ -1,0 +1,48 @@
+.outset
+
+  - render_region :main do |main|
+    - main.list do
+      %table#data_filter_index.index
+        %thead
+          %tr
+            %th.id{:style=>"width:1em"}= t('permissions_extension.group.id')
+            %th.code{:style => 'width: 2em'}= t('permissions_extension.permission.code')
+            %th.desc{:style=>"width:5em"}= t('permissions_extension.permission.controller')
+            %th.actions{:style=>"width:9em"}= t('modify')
+        %tbody
+          - if @data_filters.any?
+            - @data_filters.each do |permission|
+              %tr[permission]
+                %td.id{:style => "white-space: nowrap"}=link_to data_filter.id,edit_admin_data_filter_url(data_filter.id)
+                %td.code{:style => "white-space: nowrap"}=link_to data_filter.code,edit_admin_data_filter_url(data_filter.id)
+                %td.controller=data_filter.desc
+                %td.actions{:style => "float: left"}=action_links(data_filter)
+
+  - render_region :bottom do |bottom|
+    - bottom.new_button do
+      #actions
+        = pagination_for(@data_filters)
+        %ul
+          %li= link_to image('plus') + " " + t('permissions_extension.new_permission'), new_admin_data_filter_url
+
+- content_for 'page_css' do
+  :sass
+    table#data_filter_index
+      div.nest-padding
+        width: 35px
+        height: 10px
+        float: left
+      tr.spacer
+        td
+          background: #EAEAEA
+          height: 3px
+          padding: 0
+      span.title
+        a
+          color: black
+          font-size: 115%
+          font-weight: bold
+          text-decoration: none
+          &:hover
+            color: #0066cc
+            text-decoration: underline

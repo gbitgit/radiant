@@ -1,0 +1,23 @@
+%tr
+  %th.label Template
+  %td{:class => "field", :style => "text-align: left;"}
+    - @content_template ||= @page.template
+    %ul#template-chooser
+      - ::Template.find(:all).each do |template|
+        %li{:class => template == @content_template ? 'selected' : nil}= link_to_unless(template == @content_template, template.name.humanize.titleize, "?template=#{template.id}")
+      %li{:class => @content_template.blank? ? 'selected' : nil}
+        = link_to_unless(@content_template.blank?, "Blank Page", @page.id.nil? ? "?template=" : "?template=0")
+
+- content_for :page_css do
+  :sass
+    @import "compass/utilities/lists/inline-list"
+    ul#template-chooser
+      +inline-list
+      li, li a
+        padding: 0.2em
+        line-height: 1.5em
+        color: white
+        white-space: nowrap
+        &.selected
+          font-weight: bold
+          font-size: 110%
