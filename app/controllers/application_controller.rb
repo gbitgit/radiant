@@ -32,22 +32,25 @@ class ApplicationController < ActionController::Base
 
   filter_parameter_logging :password
 
-  before_filter { RubyProf.start if (not RubyProf.running? and ENV['RAILS_ENV'] == "development")}
+#  before_filter { RubyProf.start if (not RubyProf.running? and ENV['RAILS_ENV'] == "development")}
 #  before_filter { RubyProf.start if (not RubyProf.running? and ENV['RAILS_ENV'] == "production")}
 
-#  after_filter { post_measure_ticks() if (RubyProf.running?)}
-  after_filter { post_measure_ticks if (RubyProf.running? and ENV['RAILS_ENV'] == "development")}
-#  after_filter { post_measure_ticks if (RubyProf.running? and ENV['RAILS_ENV'] == "production")}
+#  after_filter do :post_measure_ticks if (RubyProf.running? and ENV['RAILS_ENV'] == "development") end
+#  after_filter :post_measure_ticks
 
   #around_filter :disable_gc
+
+private
 
   def post_measure_ticks
       result=RubyProf.stop
       printer = RubyProf::CallTreePrinter.new(result)
       printer.print(STDOUT)
       measure_names = { RubyProf::MEMORY => 'memory', RubyProf::PROCESS_TIME => 'time' }
-      printer.print(File.open("callgrind.out.posts_index_#{measure_names[RubyProf::measure_mode]}", 'w+'))
+      printer.print(File.open("callgrind.out.log_#{measure_names[RubyProf::measure_mode]}", 'w+'))
   end
+
+public
 
   def initialize
     super

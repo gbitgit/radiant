@@ -60,6 +60,13 @@ module Radiant
     def run
       load_mutex
       load_initializer
+      #bundle recommendation
+      Radiant::Initializer.class_eval do
+        def load_gems
+          @bundler_loaded ||= Bundler.require :default, Rails.env
+        end
+      end
+      #END of bundle recommendation
     end
     
     # RubyGems from version 1.6 does not require thread but Rails depend on it
@@ -116,6 +123,20 @@ module Radiant
     end
   end
 end
+
+#class Rails::Boot
+#  def run
+#    load_initializer
+#
+#    Rails::Initializer.class_eval do
+#      def load_gems
+#        @bundler_loaded ||= Bundler.require :default, Rails.env
+#      end
+#    end
+#
+#    Rails::Initializer.run(:set_load_path)
+#  end
+#end
 
 # All that for this:
 Radiant.boot!

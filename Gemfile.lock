@@ -1,9 +1,15 @@
 GIT
-  remote: git://github.com/rails/arel.git
-  revision: c44ffd29e4161e9bd5146c8c6a3aae6f3090f35c
-  branch: v2.2.3
+  remote: git://github.com/jeremyevans/sequel.git
+  revision: 004b06a0a4aec47cde1c24cdd86407a51b642cb6
   specs:
-    arel (2.2.3.20120221150435)
+    sequel (3.35.0)
+
+GIT
+  remote: git://github.com/mark-moseley/linecache
+  revision: 869c6a65155068415925067e480741bd0a71527e
+  specs:
+    linecache19 (0.5.12)
+      ruby_core_source (>= 0.1.4)
 
 GEM
   remote: http://rubygems.org/
@@ -22,6 +28,7 @@ GEM
     activesupport (2.3.14)
     acts_as_list (0.1.4)
     acts_as_tree (0.1.1)
+    archive-tar-minitar (0.5.2)
     bluecloth (2.1.0)
     builder (3.0.0)
     chunky_png (1.2.5)
@@ -30,6 +37,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.3.1)
+    columnize (0.3.6)
     compass (0.11.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -44,7 +52,7 @@ GEM
     delocalize (0.2.6)
     diff-lcs (1.1.3)
     erubis (2.7.0)
-    execjs (1.3.0)
+    execjs (1.3.1)
       multi_json (~> 1.0)
     factory_girl (2.6.4)
       activesupport (>= 2.3.9)
@@ -52,10 +60,17 @@ GEM
     gem_plugin (0.2.3)
     gherkin (2.9.3)
       json (>= 1.4.6)
+    git (1.2.5)
     haml (3.1.4)
     highline (1.6.11)
     hpricot (0.8.6)
-    json (1.6.6)
+    jeweler (1.8.3)
+      bundler (~> 1.0)
+      git (>= 1.2.5)
+      rake
+      rdoc
+    json (1.7.0)
+    libv8 (3.3.10.4)
     mime-types (1.18)
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
@@ -63,8 +78,7 @@ GEM
     mongrel_cluster (1.0.5)
       gem_plugin (>= 0.2.3)
       mongrel (>= 1.0.2)
-    multi_json (1.2.0)
-    nokogiri (1.5.2)
+    multi_json (1.3.2)
     paperclip (2.5.2)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -129,14 +143,33 @@ GEM
     rake (0.8.7)
     rdoc (3.12)
       json (~> 1.4)
+    ruby-debug-base19 (0.11.25)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug-base19x (0.11.30.pre10)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      rake (>= 0.8.1)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
     ruby-prof (0.10.8)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     rubypants (0.2.0)
-    sass (3.1.15)
-    sexp_processor (3.1.0)
-    stringex (1.3.2)
+    sass (3.1.16)
+    seed-fu (1.2.3)
+      rails (>= 2.1)
+    sexp_processor (3.2.0)
+    stringex (1.3.3)
     term-ansicolor (1.0.7)
+    therubyracer (0.10.1)
+      libv8 (~> 3.3.10)
     tzinfo (0.3.33)
     uuidtools (2.1.2)
     will_paginate (2.3.16)
@@ -147,20 +180,22 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   acts_as_tree
-  arel!
   bluecloth
   bundler
   compass
   cucumber
   delocalize
   erubis
+  execjs
   factory_girl
   haml
   highline
   hpricot
-  mongrel
+  jeweler
+  linecache19!
+  mongrel (~> 1.2.0.pre2)
   mongrel_cluster
-  nokogiri
+  multi_json (= 1.3.2)
   pg
   rack
   rack-cache
@@ -171,10 +206,15 @@ DEPENDENCIES
   rails (= 2.3.14)
   rake (= 0.8.7)
   rdoc
+  ruby-debug-base19x (~> 0.11.30.pre4)
+  ruby-debug19
   ruby-prof
   ruby_parser
   rubypants
   sass
+  seed-fu (~> 1.2.0)
+  sequel!
   stringex
+  therubyracer
   uuidtools
   will_paginate (~> 2.3.16)

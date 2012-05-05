@@ -1,0 +1,27 @@
+/usr/local/rvm/gems/ruby-1.9.3-p125/gems/rake-0.8.7/lib/rake/alt_system.rb:32: Use RbConfig instead of obsolete and deprecated Config.
+NOTE: Gem.source_index is deprecated, use Specification. It will be removed on or after 2011-11-01.
+Gem.source_index called from /usr/local/rvm/gems/ruby-1.9.3-p125/gems/rails-2.3.14/lib/rails/gem_dependency.rb:21.
+DEPRECATION WARNING: Rake tasks in vendor/plugins/acts_as_authorizable/tasks are deprecated. Use lib/tasks instead. (called from <top (required)> at /usr/local/rvm/gems/ruby-1.9.3-p125/gems/rails-2.3.14/lib/tasks/rails.rb:10)
+(in /www/radiant)
+** Invoke db:migrate (first_time)
+** Invoke environment (first_time)
+** Execute environment
+** Execute db:migrate
+** Invoke db:schema:dump (first_time)
+** Invoke environment 
+** Execute db:schema:dump
+** Invoke db:migrate:radiant (first_time)
+** Invoke environment 
+** Execute db:migrate:radiant
+** Invoke db:schema:dump (first_time)
+** Invoke environment 
+** Execute db:schema:dump
+** Invoke db:migrate:extensions (first_time)
+** Invoke environment 
+** Execute db:migrate:extensions
+** Invoke db:schema:dump (first_time)
+** Invoke environment 
+** Execute db:schema:dump
+** Invoke db:schema:dump (first_time)
+** Invoke environment 
+** Execute db:schema:dump

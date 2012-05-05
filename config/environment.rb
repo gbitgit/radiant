@@ -12,6 +12,17 @@ require 'radius'
 #require 'memcache-client'
 #require 'dalli'
 require 'rack/cache'
+require 'sequel'
+
+#DB = Sequel.open YAML.load_file(File.join(RAILS_ROOT,'config/database.yml'))[RAILS_ENV]
+yml = (YAML.load(File.read(File.join(RAILS_ROOT,'config/database.yml')))[RAILS_ENV])
+#puts yml
+#puts yml[:adapter]
+#puts yml["adapter"]
+
+DB = Sequel.connect(yml["adapter"].gsub(/postgresql/,'postgres')+'://'+yml["username"]+':'+yml["password"].to_s+'@'+yml["host"]+'/'+yml["database"])
+#DB.loggers << Logger.new($stdout)
+DB.loggers<<Logger.new(File.join(RAILS_ROOT,'log',"sequel_#{RAILS_ENV}.log"))
 
 
 YAML::ENGINE.yamler = 'syck' if RUBY_VERSION =~ /1.9/
