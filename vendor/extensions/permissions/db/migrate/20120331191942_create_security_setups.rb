@@ -95,7 +95,8 @@ class CreateSecuritySetups < ActiveRecord::Migration
 	    t.string "includes",       :limit => 8000
 	    t.string "conditions",       :limit => 1024
 
-	    t.string "arel",       :limit => 8000
+	    t.string "dsl_sql",       :limit => 8000
+	    t.string "sql",       :limit => 8000
 
 	    t.timestamp "created_at",  :limit => 0
 	    t.timestamp "updated_at",  :limit => 0

@@ -81,7 +81,7 @@ models_list=[{}]
       if model_file =~ /\.rb/
         puts "model_file = #{model_file}"
         model_path = model_file.gsub(/\.rb/,"")
-        model = model_file.gsub("#{ext_model_directory}","").camelize.gsub(".rb","").gsub("/","::").gsub(/.*::App::/,'') 
+        model = model_file.gsub("#{ext_model_directory}","").camelize.gsub(".rb","").gsub("/","::").gsub(/.*::Models::/,'') 
 	puts model
 
 puts "************  #{model} ************"

@@ -104,11 +104,12 @@ ActiveRecord::Schema.define(:version => 20120209231801) do
     t.string    "from",       :limit => 1024
     t.string    "includes",   :limit => 8000
     t.string    "conditions", :limit => 1024
-    t.string    "arel",       :limit => 8000
+    t.string    "sql",        :limit => 8000
     t.timestamp "created_at", :limit => 0
     t.timestamp "updated_at", :limit => 0
     t.integer   "created_by"
     t.integer   "updated_by"
+    t.string    "dsl_sql",    :limit => 8000
   end
 
   create_table "data_permissions", :force => true do |t|
@@ -285,6 +286,14 @@ ActiveRecord::Schema.define(:version => 20120209231801) do
   create_table "user_organizations", :force => true do |t|
     t.integer "user_id",         :null => false
     t.integer "organization_id", :null => false
+  end
+
+  create_table "user_page_permissions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "page_id"
+    t.string   "action"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

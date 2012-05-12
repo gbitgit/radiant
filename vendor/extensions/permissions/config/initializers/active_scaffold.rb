@@ -5,14 +5,14 @@
 #    end unless p.nil?
 #end
 
-ActiveScaffold.set_defaults do |config|
+#ActiveScaffold.set_defaults do |config|
   #config.ignore_columns.add [:created_at, :updated_at,:created_by, :updated_by, :lock_version]
   #config.list.columns.exclude       :created_at, :updated_at,:created_by, :updated_by
   #config. columns.exclude :id,:created_at, :updated_at,:created_by, :updated_by
-  config.ignore_columns.add :id,:created_at, :updated_at,:created_by, :updated_by
+#config.ignore_columns.add :id,:created_at, :updated_at,:created_by, :updated_by
   #config.create.exclude :id
   #config.update.columns.exclude :id
   #config.update.columns.exclude :id,:created_at, :updated_at,:created_by, :updated_by
   # adding the refresh button
 #  config.action_links.add('refresh', :label => l(:active_scaffold, :refresh), :inline => true, :position => false)
-end
+#end

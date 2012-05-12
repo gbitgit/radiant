@@ -31,6 +31,8 @@ gem "RedCloth"
 gem "bluecloth"
 
 gem "sequel", :git=>'git://github.com/jeremyevans/sequel.git'#,:tag=>""
+gem "sequel_pg"
+
 #gem "screw-unit",:git=>'git://github.com/nathansobo/screw-unit.git'
 
 #gem "devise"
@@ -43,6 +45,7 @@ gem "rubypants"
 gem "sass"
 gem "uuidtools"
 gem "cucumber"
+gem 'cucumber-rails'#,     '0.3.2'
 gem "factory_girl"
 gem "execjs"
 gem "therubyracer", :require => 'v8'
@@ -92,7 +95,15 @@ gem 'ruby-debug19', :require => 'ruby-debug', :group => [:development, :test]
 
 gem 'ruby-prof'
 #gem 'perftools.rb'#, :git => 'git://github.com/tmm1/perftools.rb.git'
-#gem 'seed-fu', '~> 1.2.0'
+gem 'seed-fu'#, '~> 1.2.0' ,:git =>'git://github.com/mbleigh/seed-fu.git'
+
+#preffered use = 'activeadmin'
+#gem 'activeadmin'
+#gem "merb-admin", "~> 0.8.8"
+
+########## Permission for
+gem 'declarative_authorization', :git => 'git://github.com/Orphist/declarative_authorization.git'
+#########################
 
 # When radiant is installed as a gem you can run all of
 # its tests and specs from an instance. If you're working
@@ -104,7 +115,7 @@ gem 'ruby-prof'
 group :development do
 #  gem 'erb2haml'
 #  gem 'haml-rails'
-  gem 'hpricot'
+#  gem 'hpricot'
   gem 'ruby_parser'
   gem 'erubis'
 #git clone git://github.com/cowboyd/therubyracer.git .git_local/therubyracer
@@ -112,6 +123,13 @@ group :development do
 #git submodule update --init
 #bundle install
 #rake compile
+
+    gem 'rspec',              '1.3.0'
+    gem 'rspec-rails',        '1.3.2'
+    gem 'database_cleaner',   '0.4.3'
+    gem 'webrat',             '0.7.1'
+    gem 'rr',                 '0.10.11'
+  
 end
 
 if ENV['TRAVIS']

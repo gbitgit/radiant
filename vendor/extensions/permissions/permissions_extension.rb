@@ -21,6 +21,7 @@ class PermissionsExtension < Radiant::Extension
       add_item "Data filters", "/admin/data_filters",:after=>"User organizations"
       add_item "Data permissions", "/admin/data_permissions",:after=>"Data filters"
       add_item "Categories", "/admin/categories",:after=>"Data permissions"
+      add_item "Countries", "/admin/countries",:after=>"Categories"
     end
 
     #Page.class_eval { include PermissionsTags }
@@ -32,6 +33,7 @@ class PermissionsExtension < Radiant::Extension
       attr_accessor :data_filters
       attr_accessor :data_permissions
       attr_accessor :categories
+      attr_accessor :countries
       alias_method "ctrl_filters", :ctrl_filters
       alias_method "ctrl_permissions", :ctrl_permissions
       alias_method "groups", :groups
@@ -39,6 +41,7 @@ class PermissionsExtension < Radiant::Extension
       alias_method "data_filters", :data_filters
       alias_method "data_permissions", :data_permissions
       alias_method "categories", :categories
+      alias_method "countries", :countries
     end
 
     admin.ctrl_filters = load_default_ctrl_filters_regions
@@ -48,6 +51,7 @@ class PermissionsExtension < Radiant::Extension
     admin.data_filters = load_default_data_filters_regions
     admin.data_permissions = load_default_data_permissions_regions
     admin.categories = load_default_categories_regions
+    admin.countries = load_default_countries_regions
   end
 
   def load_default_ctrl_filters_regions
@@ -113,6 +117,16 @@ class PermissionsExtension < Radiant::Extension
   def load_default_organizations_regions
     OpenStruct.new.tap do |organizations|
       organizations.index = Radiant::AdminUI::RegionSet.new do |index|
+        index.top.concat %w{}
+        index.main.concat %w{list}
+        index.bottom.concat %w{new_button}
+      end
+    end
+  end
+
+  def load_default_countries_regions
+    OpenStruct.new.tap do |countries|
+      countries.index = Radiant::AdminUI::RegionSet.new do |index|
         index.top.concat %w{}
         index.main.concat %w{list}
         index.bottom.concat %w{new_button}

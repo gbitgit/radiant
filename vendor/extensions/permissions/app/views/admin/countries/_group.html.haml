@@ -1,0 +1,12 @@
+%tr.node
+  %td.layout
+
+    - if group
+      %span.code
+        = image('../extensions/permissions/setting.png', :alt => '')
+        = link_to group.code.humanize, edit_admin_group_path(group), :title => group.code
+    - else
+      %span.title.label= code.humanize
+  %td
+    - if group
+      = group.code

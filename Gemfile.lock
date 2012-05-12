@@ -1,6 +1,12 @@
 GIT
+  remote: git://github.com/Orphist/declarative_authorization.git
+  revision: 4819d0ca3c23feae84e141e9b2510b265a7c776a
+  specs:
+    declarative_authorization (0.5.5)
+
+GIT
   remote: git://github.com/jeremyevans/sequel.git
-  revision: 004b06a0a4aec47cde1c24cdd86407a51b642cb6
+  revision: 7a02ac28595d6f157a54075bbf4b35921bf5133c
   specs:
     sequel (3.35.0)
 
@@ -28,9 +34,19 @@ GEM
     activesupport (2.3.14)
     acts_as_list (0.1.4)
     acts_as_tree (0.1.1)
+    addressable (2.2.8)
     archive-tar-minitar (0.5.2)
     bluecloth (2.1.0)
     builder (3.0.0)
+    capybara (1.1.2)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      selenium-webdriver (~> 2.0)
+      xpath (~> 0.1.4)
+    childprocess (0.3.2)
+      ffi (~> 1.0.6)
     chunky_png (1.2.5)
     cocaine (0.2.1)
     coffee-script (2.2.0)
@@ -42,35 +58,41 @@ GEM
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-    cucumber (1.1.9)
+    cucumber (1.2.0)
       builder (>= 2.1.2)
-      diff-lcs (>= 1.1.2)
-      gherkin (~> 2.9.0)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.10.0)
       json (>= 1.4.6)
-      term-ansicolor (>= 1.0.6)
+    cucumber-rails (1.3.0)
+      capybara (>= 1.1.2)
+      cucumber (>= 1.1.8)
+      nokogiri (>= 1.5.0)
     daemons (1.0.10)
+    database_cleaner (0.4.3)
     delocalize (0.2.6)
     diff-lcs (1.1.3)
     erubis (2.7.0)
-    execjs (1.3.1)
+    execjs (1.3.2)
       multi_json (~> 1.0)
     factory_girl (2.6.4)
       activesupport (>= 2.3.9)
+    ffi (1.0.11)
     fssm (0.2.9)
     gem_plugin (0.2.3)
-    gherkin (2.9.3)
+    gherkin (2.10.0)
       json (>= 1.4.6)
     git (1.2.5)
-    haml (3.1.4)
-    highline (1.6.11)
-    hpricot (0.8.6)
+    haml (3.1.5)
+    highline (1.6.12)
     jeweler (1.8.3)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
       rdoc
-    json (1.7.0)
+    json (1.7.1)
     libv8 (3.3.10.4)
+    libwebsocket (0.1.3)
+      addressable
     mime-types (1.18)
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
@@ -79,6 +101,7 @@ GEM
       gem_plugin (>= 0.2.3)
       mongrel (>= 1.0.2)
     multi_json (1.3.2)
+    nokogiri (1.5.2)
     paperclip (2.5.2)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
@@ -88,6 +111,8 @@ GEM
     rack (1.1.3)
     rack-cache (1.0.3)
       rack (>= 0.4)
+    rack-test (0.6.1)
+      rack (>= 1.0)
     radiant (1.0.1)
       RedCloth (~> 4.2.0)
       acts_as_tree (~> 0.1.1)
@@ -143,6 +168,11 @@ GEM
     rake (0.8.7)
     rdoc (3.12)
       json (~> 1.4)
+    rr (0.10.11)
+    rspec (1.3.0)
+    rspec-rails (1.3.2)
+      rack (>= 1.0.0)
+      rspec (>= 1.3.0)
     ruby-debug-base19 (0.11.25)
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
@@ -156,23 +186,38 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby-debug-base19 (>= 0.11.19)
-    ruby-prof (0.10.8)
+    ruby-prof (0.11.2)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     rubypants (0.2.0)
-    sass (3.1.16)
+    rubyzip (0.9.8)
+    sass (3.1.17)
     seed-fu (1.2.3)
       rails (>= 2.1)
+    selenium-webdriver (2.21.2)
+      childprocess (>= 0.2.5)
+      ffi (~> 1.0)
+      libwebsocket (~> 0.1.3)
+      multi_json (~> 1.0)
+      rubyzip
+    sequel_pg (1.3.0)
+      pg (>= 0.8.0)
+      sequel (>= 3.29.0)
     sexp_processor (3.2.0)
     stringex (1.3.3)
-    term-ansicolor (1.0.7)
     therubyracer (0.10.1)
       libv8 (~> 3.3.10)
     tzinfo (0.3.33)
     uuidtools (2.1.2)
+    webrat (0.7.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
     will_paginate (2.3.16)
+    xpath (0.1.4)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
@@ -184,13 +229,15 @@ DEPENDENCIES
   bundler
   compass
   cucumber
+  cucumber-rails
+  database_cleaner (= 0.4.3)
+  declarative_authorization!
   delocalize
   erubis
   execjs
   factory_girl
   haml
   highline
-  hpricot
   jeweler
   linecache19!
   mongrel (~> 1.2.0.pre2)
@@ -206,15 +253,20 @@ DEPENDENCIES
   rails (= 2.3.14)
   rake (= 0.8.7)
   rdoc
+  rr (= 0.10.11)
+  rspec (= 1.3.0)
+  rspec-rails (= 1.3.2)
   ruby-debug-base19x (~> 0.11.30.pre4)
   ruby-debug19
   ruby-prof
   ruby_parser
   rubypants
   sass
-  seed-fu (~> 1.2.0)
+  seed-fu
   sequel!
+  sequel_pg
   stringex
   therubyracer
   uuidtools
+  webrat (= 0.7.1)
   will_paginate (~> 2.3.16)

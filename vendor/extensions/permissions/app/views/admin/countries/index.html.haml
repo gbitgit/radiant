@@ -1,0 +1,33 @@
+.outset
+  = render_region :top
+  - render_region :main do |main|
+    = select_tag_for_filter("countries", @filters, params)
+    - main.list do
+      %table.index#countries
+        %thead
+          %tr
+            %th.id{:style=>"width:1em"}= t('permissions_extension.country.id')
+            %th.iso{:style=>"width:10em"}= t('permissions_extension.country.iso')
+            %th.name{:style=>"width:30em"}= t('permissions_extension.country.name')
+            %th.printable_name{:style=>"width:10em"}= t('permissions_extension.country.printable_name')
+            %th.iso3{:style=>"width:30em"}= t('permissions_extension.country.iso3')
+            %th.actions{:style=>"width:9em"}= t('modify')
+        %tbody
+          - if @countries.any?
+            - @countries.each do |country|
+              %tr[country]
+                %td.id{:style => "width:1em;white-space: nowrap"}=country.id
+                %td.iso{:style => "width:10em;white-space: nowrap"}=link_to country.iso,edit_admin_country_url(country.id)
+                %td.name{:style=>"width:30em"}=country.name
+                %td.printable_name{:style=>"width:30em"}=country.printable_name
+                %td.iso3{:style=>"width:30em"}=country.iso3
+                %td.actions{:style => "float: left;width:9em"}=country.printable_name
+          - else
+            %tr
+              %td.empty{:colspan => admin.country.index.tbody.length}= t('permissions_extension.country.no_countrys')
+
+- render_region :bottom do |bottom|
+  - bottom.new_button do
+    #actions
+      %ul
+        %li= link_to image('plus') + " " + t('permissions_extension.country.new.create_country'), new_admin_country_url

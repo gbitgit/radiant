@@ -1,0 +1,13 @@
+<h2>List Countries</h2>
+
+
+<div id="dir_area" style="margin-left: 10px; float:left; width: 240px;">
+  <h4 style="margin: 0 0 10px 0;">tree</h4>
+  <%= tree_view @country, :id=>"dir_tree", :class=>"isotree", :span_class=>"folder", :list_id=>"iso_list" %>
+</div>
+
+<div id="iso_area" style="margin-left: 240px; padding-right:60px;">
+  <h4 style="margin: 0 0 10px 0;"></h4>
+  <table id="iso_list"></table>
+</div>
+

@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :ctrl_permissions, :active_scaffold => true
 
     admin.resources :categories,    :member => { :pick => :post}
+    admin.resources :countries, :member => { :index => :post, :show => :post}
   end
 end
 
