@@ -53,7 +53,111 @@ en:
       *Usage*:
       
       <pre><code><r:aggregate paths=\"/section1; /section2; /section3\"> ... </r:aggregate></code></pre>"
+    asset-aspect: "Returns the aspect ratio of the asset, which must be an image."
+    asset-asset_content_type: "Renders the @asset_content_type@ attribute of the asset"
+    asset-asset_file_name: "Renders the @asset_file_name@ attribute of the asset"
+    asset-asset_file_size: "Renders the @asset_file_size@ attribute of the asset"
+    asset-caption: "Renders the @caption@ attribute of the asset"
+    asset-extension: "Renders the @extension@ attribute of the asset"
+    asset-flash: "Embeds a flash-movie in a cross-browser-compatible fashion using only HTML
+      If no width and height attributes are given it will use the intrinsic
+      dimensions of the swf file
+      
+      *Usage:*
+      <pre><code><r:asset:flash [name=\"asset name\" or id=\"asset id\"] [width=\"100\"] [height=\"100\"]>Fallback content</flash></code></pre>
+      
+      *Example with text fallback:*
+      <pre><code><r:asset:flash name=\"flash_movie\">
+            Sorry, you need to have flash installed, <a href=\"http://adobe.com/flash\">get it here</a>
+      </flash></code></pre>
+      
+      *Example with image fallback and explicit dimensions:*
+      <pre><code><r:asset:flash name=\"flash_movie\" width=\"300\" height=\"200\">
+            <r:asset:image name=\"flash_screenshot\" />
+        </flash></code></pre>"
+    asset-height: "Renders the height of the asset."
+    asset-id: "Renders the @id@ attribute of the asset"
+    asset-if_content_type: "Renders the containing elements only if the asset's content type matches
+      the regular expression given in the @matches@ attribute. If the
+      @ignore_case@ attribute is set to false, the match is case sensitive. By
+      default, @ignore_case@ is set to true.
+        
+      The @name@ or @id@ attribute is required on the parent tag unless this tag is used in @asset:each@.
+
+      *Usage:* 
+      <pre><code><r:asset:each><r:if_content_type matches=\"regexp\" [ignore_case=true|false\"]>...</r:if_content_type></r:asset:each></code></pre>"
+    asset-image: "Renders an image tag for the asset.
+      
+      Using the optional @size@ attribute, different sizes can be display.
+      \"thumbnail\" and \"icon\" sizes are built in, but custom ones can be set
+      by changing `assets.thumbnails.[type]` in the Radiant::Config settings.
+      
+      *Usage:* 
+      <pre><code><r:asset:image [name=\"asset name\" or id=\"asset id\"] [size=\"icon|thumbnail|whatever\"]></code></pre>"
+    asset-link: "Renders a link to the asset. If the asset is an image, the <code>size</code> attribute can be used to 
+      generate a link to that size. 
+      
+      *Usage:* 
+      <pre><code><r:asset:link [name=\"asset name\" or id=\"asset id\"] [size=\"icon|thumbnail\"] /></code></pre>"
+    asset-orientation: "Returns a string representing the orientation of the asset, which must be imageable. 
+      (ie, it is an image or it has been processed to produce an image). 
+      Can be 'horizontal', 'vertical' or 'square'."
+    asset-title: "Renders the @title@ attribute of the asset"
+    asset-top_padding: "Renders the value for a top padding for a thumbnail. Put the thumbnail in a
+      container with specified height and using this tag you can vertically
+      align the image within its container.
+  
+      *Usage*:
+      <pre><code><r:asset:top_padding container = \"140\" [size=\"icon\"]/></code></pre>
+  
+      *Working Example*:
+      <pre><code>
+        <ul>
+            <r:asset:each>
+              <li style=\"height:140px\">
+                  <img style=\"padding-top:<r:top_padding size='category' container='140' />px\" 
+                         src=\"<r:url />\" alt=\"<r:title />\" />
+              </li>
+            </r:asset:each>
+        </ul>
+      </code></pre>"
+    asset-url: "Renders the url for the asset. If the asset is an image, the <code>size</code> attribute can be used to 
+      generate the url for that size. 
+      
+      *Usage:* 
+      <pre><code><r:url [name=\"asset name\" or id=\"asset id\"] [size=\"icon|thumbnail\"]></code></pre>"
+    asset-width: "Renders the width of the asset."
+    asset: "The namespace for referencing images and assets.
+      
+      *Usage:* 
+      <pre><code><r:asset [name=\"asset name\"]>...</r:asset></code></pre>"
+    assets-first: "References the first asset attached to the current page.  
+      
+      *Usage:* 
+      <pre><code><r:assets:first>...</r:assets:first></code></pre>"
+    assets: "Cycles through all assets attached to the current page.  
+      This tag does not require the name atttribute, nor do any of its children.
+      Use the @limit@ and @offset@ attribute to render a specific number of assets.
+      Use @by@ and @order@ attributes to control the order of assets.
+      Use @extensions@ attribute to specify which assets to be rendered.
+      
+      *Usage:* 
+      <pre><code><r:assets:each [limit=0] [offset=0] [order=\"asc|desc\"] [by=\"position|title|...\"] [extensions=\"png|pdf|doc\"]>...</r:assets:each></code></pre>"
     author: "Renders the name of the author of the current page."
+    boolean_part-if: "Renders its contents if the selected part contains the text \"true\".  When
+      used with check_box part-types in a template, can turn on and off sections
+      of content.  The 'part' attribute is required.
+      
+      *Usage*:
+      
+      <pre><code><r:boolean_part:if part=\"display_sidebar\">Sidebar content</r:boolean_part:if></code></pre>"
+    boolean_part-unless: "Renders its contents if the selected part does not contain the text \"true\".  When
+      used with check_box part-types in a template, can turn on and off sections
+      of content.  The 'part' attribute is required.
+      
+      *Usage*:
+      
+      <pre><code><r:boolean_part:unless part=\"display_sidebar\">Sidebar content</r:boolean_part:unless></code></pre>"
     breadcrumb: "Renders the @breadcrumb@ attribute of the current page."
     breadcrumbs: "Renders a trail of breadcrumbs to the current page. The separator attribute
       specifies the HTML fragment that is inserted between each of the breadcrumbs. By
@@ -163,6 +267,19 @@ en:
       *Usage:*
       
       <pre><code><r:children:first>...</r:children:first></code></pre>"
+    children-grouped: "Cycles through groups of child pages. Inside this tag, children:each is available again.
+      Takes the same parameters as a normal children:each, except for pagination.
+      
+      *Usage:*
+      
+      <pre><code><r:children:grouped [size=\"number\"] [limit=\"number\"]
+       [by=\"published_at|updated_at|created_at|slug|title|keywords|description\"]
+       [order=\"asc|desc\"] 
+       [status=\"draft|reviewed|published|hidden|all\"]
+       >
+       <div class=\"container\"><r:children:each>...</r:children:each></div>
+      </r:children:grouped>
+      </code></pre>"
     children-last: "Returns the last child. Inside this tag all page attribute tags are mapped to
       the last child. Takes the same ordering options as @<r:children:each>@.
 
@@ -174,12 +291,11 @@ en:
       *Usage:*
       
       <pre><code><r:children>...</r:children></code></pre>"
-    comment: "This is deprecated and will be removed. Plase use @<r:hide>@
-      Nothing inside a set of comment tags is rendered.
+    config-setting: "Renders the Radiant::Config setting specified by the required 'key' attribute.
+  
+  *Usage*:
 
-      *Usage:*
-
-      <pre><code><r:comment>...</r:comment></code></pre>"
+  <pre><code><r:config:setting key=\"admin.title\" /></code></pre>"
     content: "Renders the main content of a page. Use the @part@ attribute to select a specific
       page part. By default the @part@ attribute is set to body. Use the @inherit@
       attribute to specify that if a page does not have a content part by that name that
@@ -191,6 +307,20 @@ en:
       *Usage:*
       
       <pre><code><r:content [part=\"part_name\"] [inherit=\"true|false\"] [contextual=\"true|false\"] /></code></pre>"
+    content_for_layout: "Allows nested layouts to target this layout.  The contents of <r:inside_layout> tag blocks in another
+            layout will have their contents inserted at the location given by this tag (if they target this
+            layout).  This tag also behaves like a standard <r:content/> tag if this layout is specified directly
+            by a page.
+        
+            This tag is intended to be used inside layouts.
+        
+            *Usage:*
+        
+            <html>
+              <body>
+                  <r:content_for_layout/>
+              </body>
+            </html>"
     cycle: "Renders a counter value or one of the values given based on a global cycle counter. 
       
       To get a numeric counter just use the tag, or specify a start value with @start@.
@@ -243,21 +373,22 @@ en:
       *Usage:*
 
       <pre><code><r:hide>...</r:hide></code></pre>"
-    if_ancestor_or_self: "Renders the contained elements if the current contextual page is either the actual page or one of its parents.
-
-      This is typically used inside another tag (like &lt;r:children:each&gt;) to add conditional mark-up if the child element is or descends from the current page.
-
+    if_ancestor_or_self: "Renders the contained element if the current item is an ancestor of the current page or if it is the page itself."
+    if_assets: "Renders the contained elements only if the current contextual page has one or
+      more assets. The @min_count@ attribute specifies the minimum number of required
+      assets. You can also filter by extensions with the @extensions@ attribute.
+  
       *Usage:*
+      <pre><code><r:if_assets [min_count=\"n\"]>...</r:if_assets></code></pre>"
+    if_bool: "Given the name of a boolean page part, expands if that part's value is true.
+        
+        *Usage:*
+        
+        <pre><code><r:if_bool part=\"boolean part name\">...</r:if_bool></code></pre>"
+    if_children: "Renders the contained elements only if the current contextual page has children.
       
-      <pre><code><r:if_ancestor_or_self>...</r:if_ancestor_or_self></code></pre>"
-    if_children: "Renders the contained elements only if the current contextual page has one or
-      more child pages.  The @status@ attribute limits the status of found child pages
-      to the given status, the default is @\"published\"@. @status=\"all\"@ includes all
-      non-virtual pages regardless of status.
-
       *Usage:*
-      
-      <pre><code><r:if_children [status=\"published\"]>...</r:if_children></code></pre>"
+      <pre><code><r:if_children>...</r:if_children></code></pre>"
     if_content: "Renders the containing elements if all of the listed parts exist on a page.
       By default the @part@ attribute is set to @body@, but you may list more than one
       part by separating them with a comma. Setting the optional @inherit@ to true will
@@ -275,6 +406,17 @@ en:
       *Usage:*
 
       <pre><code><r:if_dev>...</r:if_dev></code></pre>"
+    if_earlier: "Given the name of a date page part, expands if that part's value is earlier
+        than @Time.now@. Accepts an optional @than@ parameter if you need to compare the
+        value to something other than @Time.now@. @than@ can be any string parseable by DateTime.
+        
+        *Usage:*
+        
+        <pre><code><r:if_earlier [than=\"April 7 2009\"] part=\"datetime part name\">...</r:if_earlier></code></pre>"
+    if_equal: "Given the name of an integer part, expands if the content is equal to the required @to@ attribute.
+
+        *Usage:*
+        <pre><code><r:if_equal to=\"100\" part=\"integer part name\">...</r:if_equal></code></pre>"
     if_field: "Renders the contained elements if the field given in the @name@ attribute
       exists. The tag also takes an optional @equals@ or @matches@ attribute;
       these will expand the tag if the field's content equals or matches the
@@ -283,6 +425,32 @@ en:
       *Usage:*
 
       <pre><code><r:if_field name=\"author\" [equals|matches=\"John\"] [ignore_case=\"true|false\"]>...</r:if_field></code></pre>"
+    if_greater: "Given the name of an integer page part, compares it to the required @than@ attribute. The tag
+        expands if the content is greater than the compared value. An optional @orequal@ attribute may
+        be passed to do a greater-or-equal comparison. @orequal@ defaults to false.
+            
+        *Usage:*
+        <pre><code><r:if_greater than=\"100\" [orequal=\"true|false\"] part=\"integer part name\">...</r:if_greater></code></pre>"
+    if_later: "Given the name of a datetime page part, expands if that part's value is later 
+        than @Time.now@. Accepts an optional @than@ parameter if you need to compare the
+        value to something other than @Time.now@. @than@ can be any string parseable by DateTime.
+        
+        *Usage:*
+        
+        <pre><code><r:if_later [than=\"April 7 2009\"] part=\"datetime part name\">...</r:if_later></code></pre>"
+    if_layout: "output the contents of tag if layout equals name (support regex)
+            
+            *Usage:*
+        
+            <pre><code><r:if_layout name=\"(parent|parent_of_child)\">
+              one of those layouts
+            </r:if_layout></code></pre>"
+    if_less: "Given the name of an integer page part, compares it to the required @than@ attribute. The tag
+        expands if the content is less than the compared value. An optional @orequal@ attribute may be
+        passed to do a less-than-or-equal comparison. @orequal@ defaults to false.
+            
+        *Usage:*
+        <pre><code><r:if_less than=\"100\" [orequal=\"true|false\"] part=\"integer part name\">...</r:if_less></code></pre>"
     if_parent: "Renders the contained elements only if the current contextual page has a parent, i.e.
       is not the root page.
 
@@ -296,20 +464,26 @@ en:
       *Usage:*
       
       <pre><code><r:if_path matches=\"regexp\" [ignore_case=\"true|false\"]>...</r:if_path></code></pre>"
-    if_self: "Renders the contained elements if the current contextual page is also the actual page.
-
-      This is typically used inside another tag (like &lt;r:children:each&gt;) to add conditional mark-up if the child element is the current page.
-
-      *Usage:*
+    if_self: "Renders the contained element if the current item is also the current page."
+    inside_layout: "Renders the contents of the tag inside of a \"parent\" layout, which is selected via the +name+
+            attribute.  The contents of this tag are placed at a corresponding <r:content_for_layout/> tag
+            within the parent layout.  This tag is intended to be used within your layouts, and should
+            only appear once per layout.
       
-      <pre><code><r:if_self>...</r:if_self></code></pre>"
+            *Usage:*
+
+            <r:inside_layout name=\"master\">
+              <div id=\"main-column\">
+                  <r:content_for_layout/>
+              </div>
+            </r:inside_layout>"
     javascript: "Renders the content from or a reference to the javascript specified in the @slug@ 
 attribute. Additionally, the @as@ attribute can be used to make the tag render 
 as one of the following:
 
 * with no @as@ value the javascript's content is rendered by default.
 * @inline@ - wraps the javascript's content in an (X)HTML @<script>@ element.
-* @url@ - the full path to the javascript.
+* @path@ - the full path to the javascript.
 * @link@ - embeds the url in an (X)HTML @<script>@ element (creating a link to the external javascript).
 
 *Additional Options:*
@@ -332,6 +506,15 @@ The above example will produce the following:
 //]]>
 </script>
 <script type=\"text/javascript\" src=\"/js/other.js\"></script></code></pre>"
+    layout: "Return the layout name of the current page.
+        
+            *Usage:*
+        
+            <html>
+              <body id=\"<r:layout/>\"
+                  My body tag has an id corresponding to the layout I use.  Sweet!
+              </body>
+            </html>"
     link: "Renders a link to the page. When used as a single tag it uses the page's title
       for the link name. When used as a double tag the part in between both tags will
       be used as the link text. The link tag passes all attributes over to the HTML
@@ -356,29 +539,25 @@ The above example will produce the following:
       produces
 
       <pre><code><strong> bold text </strong></code></pre>"
-    meta-description: "Emits the page description field in a meta tag, unless attribute
-      'tag' is set to 'false'.
-
+    nav: "Render a navigation menu. Walks down the directory tree, expanding the tree up to the current page.
+      
       *Usage:*
-
-      <pre><code> <r:meta:description [tag=\"false\"] /> </code></pre>"
-    meta-keywords: "Emits the page keywords field in a meta tag, unless attribute
-      'tag' is set to 'false'.
-
-      *Usage:*
-
-      <pre><code> <r:meta:keywords [tag=\"false\"] /> </code></pre>"
-    meta: "The namespace for 'meta' attributes.  If used as a singleton tag, both the description
-      and keywords fields will be output as &lt;meta /&gt; tags unless the attribute 'tag' is set to 'false'.
-
-      *Usage:*
-
-      <pre><code> <r:meta [tag=\"false\"] />
-       <r:meta>
-         <r:description [tag=\"false\"] />
-         <r:keywords [tag=\"false\"] />
-       </r:meta>
-      </code></pre>"
+      <pre><code><r:nav [id=\"subnav\"] [root=\"/products\"] [include_root=\"true\"] [depth=\"2\"] [expand_all=\"true\"]
+      [only=\"^/(articles|notices)\"] [except=\".(css|js|xml)/*$\"] /></code></pre> 
+      *Attributes:*
+      
+      * @root@ defaults to \"/\", where to start building the navigation from, you can i.e. use \"/products\" to build a subnav
+      * @include_root@ defaults to false, set to true to include the root page (i.e. Home)
+      * @ids_for_lis@ defaults to false, enable this to give each li an id (it's slug prefixed with nav_)
+      * @ids_for_links@ defaults to false, enable this to give each link an id (it's slug prefixed with nav_)
+      
+      * @depth@ defaults to 1, which means no sub-ul's, set to 2 or more for a nested list
+      * @expand_all@ defaults to false, enable this to have all li's create sub-ul's of their children, i.o. only the currently active li
+      
+      * @only@ a string or regular expresssion. only pages whose urls match this are included
+      * @except@ a string or regular expresssion. pages whose urls match this are not shown. except will override only. use to eliminate non-content file-types
+      
+      * @id@, @class@,..: go as html attributes of the outer ul"
     navigation-if_first: "Renders the containing elements if the element is the first
       in the navigation list
 
@@ -462,6 +641,9 @@ The above example will produce the following:
       *Usage:*
 
       <pre><code><r:rfc1123_date /></code></pre>"
+    site-dev_domain: "Returns Radiant::Config['site.dev_domain'] as configured under the Settings tab."
+    site-domain: "Returns Radiant::Config['site.domain'] as configured under the Settings tab."
+    site-title: "Returns Radiant::Config['site.title'] as configured under the Settings tab."
     slug: "Renders the @slug@ attribute of the current page."
     smarty_pants: "Filters its contents with the SmartyPants filter.
 
@@ -496,7 +678,7 @@ as one of the following:
 
 * with no @as@ value the stylesheet's content is rendered by default.
 * @inline@ - wraps the stylesheet's content in an (X)HTML @<style>@ element.
-* @url@ - the full path to the stylesheet.
+* @path@ - the full path to the stylesheet.
 * @link@ - embeds the url in an (X)HTML @<link>@ element (creating a link to the external stylesheet).
 
 *Additional Options:*
@@ -544,6 +726,12 @@ The above example will produce the following:
       *Usage:*
       
       <pre><code><r:unless_ancestor_or_self>...</r:unless_ancestor_or_self></code></pre>"
+    unless_assets: "The opposite of @<r:if_assets/>@."
+    unless_bool: "Given the name of a boolean page part, expands unless that part's value is true.
+        
+        *Usage:*
+        
+        <pre><code><r:unless_bool part=\"boolean part name\">...</r:unless_bool></code></pre>"
     unless_children: "Renders the contained elements only if the current contextual page has no children.
       The @status@ attribute limits the status of found child pages to the given status,
       the default is @\"published\"@. @status=\"all\"@ includes all non-virtual pages
@@ -568,6 +756,10 @@ The above example will produce the following:
       *Usage:*
 
       <pre><code><r:unless_dev>...</r:unless_dev></code></pre>"
+    unless_equal: "Given the name of an integer part, expands unless the content is equal to the required @to@ attribute.
+
+        *Usage:*
+        <pre><code><r:unless_equal to=\"100\" part=\"integer part name\">...</r:unless_equal></code></pre>"
     unless_field: "The opposite of @if_field@. Renders the contained elements unless the field
       given in the @name@ attribute exists. The tag also takes an optional
       @equals@ or @matches@ attribute; these will expand the tag unless the
@@ -576,6 +768,13 @@ The above example will produce the following:
       *Usage:*
 
       <pre><code><r:unless_field name=\"author\" [equals|matches=\"John\"] [ignore_case=\"true|false\"]>...</r:unless_field></code></pre>"
+    unless_layout: "Output the contents of tag unless layout equals name (support regex)
+            
+            *Usage:*
+        
+            <pre><code><r:unless_layout name=\"parent\">
+              not the parent layotu
+            </r:unless_layout></code></pre>"
     unless_parent: "Renders the contained elements only if the current contextual page has no parent, i.e.
       is the root page.
 

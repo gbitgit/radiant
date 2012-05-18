@@ -30,9 +30,6 @@ gem "delocalize"
 gem "RedCloth"
 gem "bluecloth"
 
-gem "sequel", :git=>'git://github.com/jeremyevans/sequel.git'#,:tag=>""
-gem "sequel_pg"
-
 #gem "screw-unit",:git=>'git://github.com/nathansobo/screw-unit.git'
 
 #gem "devise"
@@ -50,7 +47,6 @@ gem "factory_girl"
 gem "execjs"
 gem "therubyracer", :require => 'v8'
 #gem "therubyracer", "~> 0.8.2.pre" #bleeding edge.
-
 
 #gem 'memcache-client'
 #gem 'dalli',:git => 'git://github.com/mperham/dalli.git'
@@ -102,7 +98,12 @@ gem 'seed-fu'#, '~> 1.2.0' ,:git =>'git://github.com/mbleigh/seed-fu.git'
 #gem "merb-admin", "~> 0.8.8"
 
 ########## Permission for
+gem "sequel", :git=>'git://github.com/jeremyevans/sequel.git'#,:tag=>""
+gem "sequel_pg"
+
+# for demo purpose
 gem 'declarative_authorization', :git => 'git://github.com/Orphist/declarative_authorization.git'
+
 #########################
 
 # When radiant is installed as a gem you can run all of

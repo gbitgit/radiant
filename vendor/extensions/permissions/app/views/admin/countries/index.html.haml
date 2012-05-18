@@ -24,7 +24,7 @@
                 %td.actions{:style => "float: left;width:9em"}=country.printable_name
           - else
             %tr
-              %td.empty{:colspan => admin.country.index.tbody.length}= t('permissions_extension.country.no_countrys')
+              %td.empty{:colspan => admin.page.index.tbody.length}= t('permissions_extension.country.no_countrys')
 
 - render_region :bottom do |bottom|
   - bottom.new_button do

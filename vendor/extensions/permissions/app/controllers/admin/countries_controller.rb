@@ -109,6 +109,14 @@ class Country2 < ActiveRecord::Base
   has_many :companies
 end
 
+class ApplicationController < ActionController::Base
+
+  def self.before_filter_in_instance(&block)
+    before_filter do |controller|
+      controller.instance_eval(&block)
+    end
+  end
+end
 
 class Admin::CountriesController < Admin::ResourceController
 
@@ -124,6 +132,17 @@ class Admin::CountriesController < Admin::ResourceController
 #    actions :index, :show, :new, :create, :edit, :update, :remove, :destroy
 #  end
   helper :application
+
+  #before_filter  :conditions => ["iso3 like ? ", 'D%' ]
+  #before_filter :secured
+  before_filter do |c|
+  c.send(:authorize)
+  end
+
+  def authorize()
+    conditions=params[:conditions]||{}
+    conditions.merge!(:conditions => ["iso3 like ? ", 'D%' ])
+  end
 
   def index
     #@country = Country.f16#filter{'iso like ''A%'''}.limit(10)#
@@ -145,17 +164,14 @@ class Admin::CountriesController < Admin::ResourceController
 
     logger.warn "###########################   Engine reader='#{reader.inspect}'    ####################################"
     #logger.warn "#{Time.now.strftime("%H:%M:%S:%3N")} caller=#{calls}"
-
     logger.warn Country.with_permissions_to(:read,:context => :country, :user => user)
-    #logger.warn Country.with_permissions_to(:read, :user => user)
-
 
     #@countries = Country.published_only.secured
     
   @filters = Country::FILTERS
 
   if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
-    @countries = Country.secured.send(params[:show])
+    @countries = Country.send(params[:show])
   else
     @countries = Country.find(:all)
   end

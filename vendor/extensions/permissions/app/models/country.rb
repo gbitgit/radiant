@@ -9,9 +9,13 @@
 #  named_scope :sec_country, lambda { |values|
 #    { :conditions => { :id => values } }
 #  }
+      #default_scope :conditions => [ "id in (?)", [1,2,9] ]
+      default_scope :conditions => ["EXISTS (select 'X' from data_filters df, data_permissions dp
+where df.id=dp.data_filter_id and df.model='country' and dp.can_read='+')"]
+
 
       named_scope :published_only, :conditions => ["id in (?)", [1,2,9]]
-      named_scope :secured, :conditions => ["id between ? and ?", 1,9]
+      named_scope :secured, :conditions => ["id between ? and ?", 1,19]
 
 named_scope :as,      :conditions => [ "iso3 like ?", 'A%' ]
 named_scope :buki,    :conditions => [ "iso3 like ?", 'B%' ]
@@ -26,6 +30,7 @@ named_scope :low_rated,   :conditions => [ "id < ?", 3 ]
     {:scope => "high_rated",  :label => "High-Rated"},
     {:scope => "low_rated",   :label => "Low-Rated"}
   ]
+
 
 #      def initialize
 #        @sm=Sequel::Model.new
