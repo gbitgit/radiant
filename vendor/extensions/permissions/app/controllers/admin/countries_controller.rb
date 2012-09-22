@@ -136,7 +136,7 @@ class Admin::CountriesController < Admin::ResourceController
   #before_filter  :conditions => ["iso3 like ? ", 'D%' ]
   #before_filter :secured
   before_filter do |c|
-  c.send(:authorize)
+  #c.send(:authorize)
   end
 
   def authorize()
@@ -145,13 +145,16 @@ class Admin::CountriesController < Admin::ResourceController
   end
 
   def index
-    #@country = Country.f16#filter{'iso like ''A%'''}.limit(10)#
+
+       #render :nothing => true
+=begin
+
     reader = Authorization::Reader::DSLReader.new
 
     reader.parse %{
       authorization do
         role :reader_role do
-          has_permission_on :country, :to => :read do
+          has_permission_on :Country, :to => :read do
             if_attribute :id => is_in { user.test_attr_value }
           end
         end
@@ -161,21 +164,37 @@ class Admin::CountriesController < Admin::ResourceController
 
     user = MockUser.new(:reader_role, :test_attr_value => [9,46,11])
     attr_value = [9,46,11]
-
-    logger.warn "###########################   Engine reader='#{reader.inspect}'    ####################################"
+=end
+    #logger.warn "###########################   Engine reader='#{reader.inspect}'    ####################################"
     #logger.warn "#{Time.now.strftime("%H:%M:%S:%3N")} caller=#{calls}"
-    logger.warn Country.with_permissions_to(:read,:context => :country, :user => user)
+    #logger.warn Country.with_permissions_to(:read,:context => :Country, :user => user)
 
     #@countries = Country.published_only.secured
     
   @filters = Country::FILTERS
+  @label='Dataspy'
+
+  @fields = [
+    {:field => "iso3",      :label => "iso3"},
+    {:field => "name",      :label => "name"}   ]
+
+  @conditions = [{:condition => "contains",      :label => "Contains"},{:condition => "started",      :label => "Begins"},
+      {:condition => "ended",      :label => "Ended"},{:condition => "equal",      :label => "="}]
+
+
+
+  logger.warn "###########################   params='#{params}'    ####################################"
+
+  #    = select_tag_for_detailed_filter("countries", @label, @fields, @conditions, params)
 
   if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
     @countries = Country.send(params[:show])
   else
-    @countries = Country.find(:all)
+    @countries = Country.find(:all) #Country.contains(:iso3, "BE")
   end
+    #logger.warn "countries  = #{@countries.length}"
 
+#=end
 
   end
 

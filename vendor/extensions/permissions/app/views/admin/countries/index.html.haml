@@ -2,6 +2,7 @@
   = render_region :top
   - render_region :main do |main|
     = select_tag_for_filter("countries", @filters, params)
+    = select_tag_for_detailed_filter("countries", @label, @fields, @conditions, params)
     - main.list do
       %table.index#countries
         %thead
