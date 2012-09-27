@@ -1,6 +1,9 @@
 #class Admin::PermissionsController < ApplicationController
 class Admin::DataPermissionsController < Admin::ResourceController
 
+  helper '/admin/data_permissions'
+
+=begin
   active_scaffold :data_permission
   layout "application_active_scaffold"
 
@@ -87,8 +90,8 @@ class Admin::DataPermissionsController < Admin::ResourceController
 #config.columns[:bit_crud].options[:options] = ['Male', '1', 'Female','2']
 
   end
+=end
 
-=begin
   paginate_models
 
   only_allow_access_to :show, :new, :create, :edit, :update, :remove, :destroy,  #:index,
@@ -137,7 +140,6 @@ class Admin::DataPermissionsController < Admin::ResourceController
     redirect_to admin_data_permissions_url
   end
   # END tree editor
-=end
 
 
 

@@ -1,8 +1,28 @@
 .outset
   = render_region :top
   - render_region :main do |main|
-    = select_tag_for_filter("countries", @filters, params)
-    = select_tag_for_detailed_filter("countries", 'Dataspy', @fields, @conditions, params)
+    %table#products99
+      %thead
+        %tr
+          %th= TblCountry.human_attribute_name :id
+          %th= TblCountry.human_attribute_name :name
+          %th= TblCountry.human_attribute_name :printale_name
+          %th= TblCountry.human_attribute_name :iso3
+      %tbody
+        - if not @products.nil?
+          - @products.each do |product|
+            %tr[product]
+              %td.id{:style => "width:1em;white-space: nowrap"}=product.id
+              %td.name{:style=>"width:30em"}=product.name
+              %td.printable_name{:style=>"width:30em"}=product.printable_name
+              %td.iso3{:style=>"width:30em"}=product.iso3
+        - else
+          %tr
+            %td.empty{:colspan => admin.page.index.tbody.length}= t('permissions_extension.country.no_products')
+    %br
+    %br
+    = select_tag_for_filter2("tbl_countries", @filters2, params)
+    = select_tag_for_detailed_filter2("tbl_countries", 'Dataspy2', @fields2, @conditions2, params)
     - main.list do
       %table.index#countries
         %thead
@@ -14,8 +34,8 @@
             %th.iso3{:style=>"width:30em"}= t('permissions_extension.country.iso3')
             %th.actions{:style=>"width:9em"}= t('modify')
         %tbody
-          - if @countries.any?
-            - @countries.each do |country|
+          - if @countries2.any?
+            - @countries2.each do |country|
               %tr[country]
                 %td.id{:style => "width:1em;white-space: nowrap"}=country.id
                 %td.iso{:style => "width:10em;white-space: nowrap"}=link_to country.iso,edit_admin_country_url(country.id)

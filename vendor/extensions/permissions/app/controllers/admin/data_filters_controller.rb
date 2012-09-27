@@ -1,7 +1,10 @@
 class Admin::DataFiltersController < Admin::ResourceController
-  active_scaffold :data_filter
+
+#  active_scaffold :data_filter
 #    render :partial => "page_field", :object => model,
 #      :locals => { :page_field_counter => params[:page_field_counter].to_i}
+
+=begin
   layout "application_active_scaffold"
   active_scaffold :data_filter do |config|
 
@@ -11,8 +14,8 @@ class Admin::DataFiltersController < Admin::ResourceController
 
 
   end
+=end
 
-=begin
   paginate_models
 
 
@@ -62,7 +65,6 @@ class Admin::DataFiltersController < Admin::ResourceController
     flash[:notice] = t('data_filters_extension.notices.destroy.success', :data_filter => @id)
     redirect_to admin_data_filters_url
   end
-=end
 
 
 

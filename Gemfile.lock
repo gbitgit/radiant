@@ -6,9 +6,9 @@ GIT
 
 GIT
   remote: git://github.com/jeremyevans/sequel.git
-  revision: 7a02ac28595d6f157a54075bbf4b35921bf5133c
+  revision: 59d4d41d5fe46658721c7d8b8d39b8878dd0fc9a
   specs:
-    sequel (3.35.0)
+    sequel (3.40.0)
 
 GIT
   remote: git://github.com/mark-moseley/linecache
@@ -16,6 +16,13 @@ GIT
   specs:
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
+
+GIT
+  remote: git://github.com/rails/arel.git
+  revision: c44ffd29e4161e9bd5146c8c6a3aae6f3090f35c
+  tag: v2.2.3
+  specs:
+    arel (2.2.3.20120221150435)
 
 GEM
   remote: http://rubygems.org/
@@ -34,10 +41,10 @@ GEM
     activesupport (2.3.14)
     acts_as_list (0.1.4)
     acts_as_tree (0.1.1)
-    addressable (2.2.8)
+    addressable (2.3.2)
     archive-tar-minitar (0.5.2)
     bluecloth (2.1.0)
-    builder (3.0.0)
+    builder (3.1.3)
     capybara (1.1.2)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -45,23 +52,23 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
-    childprocess (0.3.2)
-      ffi (~> 1.0.6)
-    chunky_png (1.2.5)
-    cocaine (0.2.1)
+    childprocess (0.3.5)
+      ffi (~> 1.0, >= 1.0.6)
+    chunky_png (1.2.6)
+    cocaine (0.3.1)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.3.1)
+    coffee-script-source (1.3.3)
     columnize (0.3.6)
     compass (0.11.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.1)
-    cucumber (1.2.0)
+    cucumber (1.2.1)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
-      gherkin (~> 2.10.0)
+      gherkin (~> 2.11.0)
       json (>= 1.4.6)
     cucumber-rails (1.3.0)
       capybara (>= 1.1.2)
@@ -72,28 +79,41 @@ GEM
     delocalize (0.2.6)
     diff-lcs (1.1.3)
     erubis (2.7.0)
-    execjs (1.3.2)
+    execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (2.6.4)
       activesupport (>= 2.3.9)
-    ffi (1.0.11)
+    ffi (1.1.5)
     fssm (0.2.9)
     gem_plugin (0.2.3)
-    gherkin (2.10.0)
+    gherkin (2.11.2)
       json (>= 1.4.6)
     git (1.2.5)
-    haml (3.1.5)
-    highline (1.6.12)
-    jeweler (1.8.3)
+    grape (0.2.1)
+      hashie (~> 1.2)
+      multi_json
+      multi_xml
+      rack
+      rack-mount
+    haml (3.1.7)
+    hashie (1.2.0)
+    highline (1.6.15)
+    jeweler (1.8.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
       rdoc
-    json (1.7.1)
+    json (1.7.5)
+    jsonify (0.3.1)
+      multi_json (~> 1.0)
+    jsonify-rails (0.3.2)
+      actionpack
+      jsonify (< 0.4.0)
     libv8 (3.3.10.4)
-    libwebsocket (0.1.3)
+    libwebsocket (0.1.5)
       addressable
-    mime-types (1.18)
+    meta_search (0.3.0)
+    mime-types (1.19)
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
@@ -101,16 +121,19 @@ GEM
       gem_plugin (>= 0.2.3)
       mongrel (>= 1.0.2)
     multi_json (1.3.2)
-    nokogiri (1.5.2)
+    multi_xml (0.5.1)
+    nokogiri (1.5.5)
     paperclip (2.5.2)
       activerecord (>= 2.3.0)
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
-    pg (0.13.2)
+    pg (0.14.1)
     rack (1.1.3)
     rack-cache (1.0.3)
       rack (>= 0.4)
+    rack-mount (0.8.3)
+      rack (>= 1.0.0)
     rack-test (0.6.1)
       rack (>= 1.0)
     radiant (1.0.1)
@@ -149,7 +172,7 @@ GEM
     radiant-exporter-extension (1.0.3)
     radiant-markdown_filter-extension (1.0.2)
       bluecloth (~> 2.1.0)
-    radiant-sheets-extension (1.0.10)
+    radiant-sheets-extension (1.0.11)
       coffee-script (~> 2.2.0)
       sass (~> 3.1.12)
     radiant-site_templates-extension (1.0.5)
@@ -192,25 +215,27 @@ GEM
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     rubypants (0.2.0)
-    rubyzip (0.9.8)
-    sass (3.1.17)
+    rubyzip (0.9.9)
+    sass (3.1.21)
     seed-fu (1.2.3)
       rails (>= 2.1)
-    selenium-webdriver (2.21.2)
+    selenium-webdriver (2.25.0)
       childprocess (>= 0.2.5)
-      ffi (~> 1.0)
       libwebsocket (~> 0.1.3)
       multi_json (~> 1.0)
       rubyzip
-    sequel_pg (1.3.0)
+    sequel_pg (1.6.0)
       pg (>= 0.8.0)
-      sequel (>= 3.29.0)
+      sequel (>= 3.39.0)
     sexp_processor (3.2.0)
     stringex (1.3.3)
-    therubyracer (0.10.1)
+    therubyracer (0.10.2)
       libv8 (~> 3.3.10)
     tzinfo (0.3.33)
-    uuidtools (2.1.2)
+    uglifier (1.3.0)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
+    uuidtools (2.1.3)
     webrat (0.7.1)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -225,6 +250,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   acts_as_tree
+  arel!
   bluecloth
   bundler
   compass
@@ -236,10 +262,14 @@ DEPENDENCIES
   erubis
   execjs
   factory_girl
+  grape
   haml
   highline
   jeweler
+  jsonify
+  jsonify-rails
   linecache19!
+  meta_search
   mongrel (~> 1.2.0.pre2)
   mongrel_cluster
   multi_json (= 1.3.2)
@@ -267,6 +297,7 @@ DEPENDENCIES
   sequel_pg
   stringex
   therubyracer
+  uglifier (>= 1.0.3)
   uuidtools
   webrat (= 0.7.1)
   will_paginate (~> 2.3.16)

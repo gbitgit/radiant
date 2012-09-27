@@ -42,7 +42,7 @@ html << "</label>"
 end
 html
 else
-  active_scaffold_config.list.empty_field_text
+  #active_scaffold_config.list.empty_field_text
 end
 
 #html = ''

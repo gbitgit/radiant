@@ -1,4 +1,6 @@
 class Admin::OrganizationsController < Admin::ResourceController
+
+=begin
   active_scaffold :organization
   layout "application_active_scaffold"
 
@@ -18,8 +20,8 @@ class Admin::OrganizationsController < Admin::ResourceController
     #config.columns[:user].form_ui = :select
 
     end
+=end
 
-=begin
   paginate_models
 
   only_allow_access_to :index, :show, :new, :create, :edit, :update, :remove, :destroy,
@@ -64,6 +66,5 @@ class Admin::OrganizationsController < Admin::ResourceController
     flash[:notice] = t('permissions_extension.notices.organization.destroy.success', :organization => @id)
     redirect_to admin_organizations_url
   end
-=end
 
 end

@@ -21,6 +21,12 @@ ActionController::Routing::Routes.draw do |map|
     admin.reference '/reference/:type.:format', :controller => 'references', :action => 'show', :conditions => {:method => :get}
   end
 
+=begin
+  define_routes do |map|
+    AdminData::Routing.connect_with map
+  end
+=end
+
   # Admin Routes
   map.with_options(:controller => 'admin/welcome') do |welcome|
     welcome.admin          'admin',                              :action => 'index'

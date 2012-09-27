@@ -1,4 +1,6 @@
 class Admin::UserOrganizationsController < Admin::ResourceController
+
+=begin
   active_scaffold :user_organization
   layout "application_active_scaffold"
 
@@ -18,4 +20,5 @@ class Admin::UserOrganizationsController < Admin::ResourceController
     #config.columns[:user].form_ui = :select
 
     end
+=end
 end

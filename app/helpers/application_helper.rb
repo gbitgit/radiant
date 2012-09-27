@@ -223,6 +223,7 @@ module ApplicationHelper
     end
   end
 
+
 def select_tag_for_filter(model, nvpairs, params)
   options = { :query => params[:query] }
   _url = url_for(eval("admin_#{model}_url(options)"))
@@ -241,6 +242,123 @@ params[:show].empty?) && pair[:scope] == "all")
   _html << %{</select>}
 end
 
+
+def select_tag_for_detailed_filter(model, label, fields, conditions, params)
+  options = { :query => params[:query] }
+  _url = url_for(eval("admin_#{model}_url(options)"))
+
+  _html = %{<label for="show">#{label}:</label><br />}
+  _html << %{<select name="field" id="field">}
+  #_html << %{onchange="javascript:document.getElementById("dspy_value").value=''">}
+
+  fields.each do |field|
+    _html << %{<option value="#{field[:field]}"}
+    if params[:show] == field[:field] || ((params[:show].nil? ||
+params[:show].empty?) && field[:field] == "all")
+      _html << %{ selected="selected"}
+    end
+    _html << %{>#{field[:label]}}
+    _html << %{</option>}
+  end
+  _html << %{</select>}
+
+  _html << %{<select name="condition" id="condition">}
+  conditions.each do |condition|
+    _html << %{<option value="#{condition[:condition]}"}
+    if params[:show] == condition[:condition] || ((params[:show].nil? ||
+params[:show].empty?) && condition[:condition] == "all")
+      _html << %{ selected="selected"}
+    end
+    _html << %{>#{condition[:label]}}
+    _html << %{</option>}
+  end
+  _html << %{</select>}
+
+  _html << %{<input name="dspy_value" id="dspy_value" value="AF"/> }
+  _html << %{<script>function doDataspy() { return window.location='#{_url}' +  '?show='
++document.getElementById("condition").value+ '(:'
++document.getElementById("field").value+ ',"'
++document.getElementById("dspy_value").value+'")  } </script>}
+  _html << %{<input type="submit" onclick="javascript:(window.location='#{_url}' +
+'?show='
++document.getElementById(&quot;condition&quot;).value+'/'
++document.getElementById(&quot;field&quot;).value+ '/'
++document.getElementById(&quot;dspy_value&quot;).value);"
+ style="margin-right: 10px;border:1px solid #000000;font-family:Arial,Helvetica,sans-serif; font-size:11px;" value="Run"/>}
+
+  _html << %{<input type="submit" onclick="javascript:alert(document.getElementById(&quot;condition&quot;).value);" value="Run2"/>}
+
+
+end
+
+
+
+def select_tag_for_filter2(model, nvpairs, params)
+  options = { :query => params[:query] }
+  _url = url_for(eval("admin_#{model}_url(options)"))
+  _html = %{<label for="show">Show:</label><br />}
+  _html << %{<select name="show" id="show"}
+  _html << %{onchange="window.location='#{_url}' + '?show=' + this.value ">}
+  nvpairs.each do |pair|
+    _html << %{<option value="#{pair[:scope]}"}
+    if params[:show] == pair[:scope] || ((params[:show].nil? ||
+params[:show].empty?) && pair[:scope] == "all")
+      _html << %{ selected="selected"}
+    end
+    _html << %{>#{pair[:label]}}
+    _html << %{</option>}
+  end
+  _html << %{</select>}
+end
+
+
+def select_tag_for_detailed_filter2(model, label, fields, conditions, params)
+  options = { :query => params[:query] }
+  _url = url_for(eval("admin_#{model}_url(options)"))
+
+  _html = %{<label for="show">#{label}:</label><br />}
+  _html << %{<select name="field" id="field">}
+  #_html << %{onchange="javascript:document.getElementById("dspy_value").value=''">}
+
+  fields.each do |field|
+    _html << %{<option value="#{field[:field]}"}
+    if params[:show] == field[:field] || ((params[:show].nil? ||
+params[:show].empty?) && field[:field] == "all")
+      _html << %{ selected="selected"}
+    end
+    _html << %{>#{field[:label]}}
+    _html << %{</option>}
+  end
+  _html << %{</select>}
+
+  _html << %{<select name="condition" id="condition">}
+  conditions.each do |condition|
+    _html << %{<option value="#{condition[:condition]}"}
+    if params[:show] == condition[:condition] || ((params[:show].nil? ||
+params[:show].empty?) && condition[:condition] == "all")
+      _html << %{ selected="selected"}
+    end
+    _html << %{>#{condition[:label]}}
+    _html << %{</option>}
+  end
+  _html << %{</select>}
+
+  _html << %{<input name="dspy_value" id="dspy_value" value="AF"/> }
+  _html << %{<script>function doDataspy() { return window.location='#{_url}' +  '?show='
++document.getElementById("condition").value+ '(:'
++document.getElementById("field").value+ ',"'
++document.getElementById("dspy_value").value+'")  } </script>}
+  _html << %{<input type="submit" onclick="javascript:(window.location='#{_url}' +
+'?show='
++document.getElementById(&quot;condition&quot;).value+'/'
++document.getElementById(&quot;field&quot;).value+ '/'
++document.getElementById(&quot;dspy_value&quot;).value);"
+ style="margin-right: 10px;border:1px solid #000000;font-family:Arial,Helvetica,sans-serif; font-size:11px;" value="Run"/>}
+
+  _html << %{<input type="submit" onclick="javascript:alert(document.getElementById(&quot;condition&quot;).value);" value="Run2"/>}
+
+
+end
 
   private
   

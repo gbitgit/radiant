@@ -1,9 +1,10 @@
 
 class Admin::GroupsController < Admin::ResourceController
 
-  active_scaffold :group
-  layout "application_active_scaffold"
+#  active_scaffold :group
+#  layout "application_active_scaffold"
 
+=begin
   active_scaffold :group do |config|
 
   #config.left_handed = true
@@ -22,8 +23,8 @@ class Admin::GroupsController < Admin::ResourceController
     #config.columns[:user].form_ui = :select
 
   end
+=end
 
-=begin
   paginate_models
 
   only_allow_access_to :index, :show, :new, :create, :edit, :update, :remove, :destroy,
@@ -68,6 +69,5 @@ class Admin::GroupsController < Admin::ResourceController
     flash[:notice] = t('groups_extension.notices.destroy.success', :group => @id)
     redirect_to admin_groups_url
   end
-=end
 
 end

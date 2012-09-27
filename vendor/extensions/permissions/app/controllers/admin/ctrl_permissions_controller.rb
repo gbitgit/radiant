@@ -1,6 +1,8 @@
 #class Admin::PermissionsController < ApplicationController
 class Admin::CtrlPermissionsController < Admin::ResourceController
 
+=begin
+
   active_scaffold :ctrl_permission
   layout "application_active_scaffold"
 
@@ -23,9 +25,8 @@ class Admin::CtrlPermissionsController < Admin::ResourceController
     config.columns[:organization].form_ui = :select
 
   end
+=end
 
-
-=begin
   paginate_models
 
   only_allow_access_to :index, :show, :new, :create, :edit, :update, :remove, :destroy,
@@ -66,7 +67,6 @@ class Admin::CtrlPermissionsController < Admin::ResourceController
     redirect_to admin_ctrl_permissions_url
   end
   # END tree editor
-=end
 
 end
 

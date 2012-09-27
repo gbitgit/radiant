@@ -1,4 +1,5 @@
 class Admin::UserGroupsController < Admin::ResourceController
+begin
   active_scaffold :user_group
   layout "application_active_scaffold"
 
@@ -18,4 +19,5 @@ class Admin::UserGroupsController < Admin::ResourceController
     #config.columns[:user].form_ui = :select
 
     end
+=end    
 end

@@ -1,0 +1,3 @@
+@products.each do |product|
+  json << [product.name, product.printable_name, product.iso3]
+end

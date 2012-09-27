@@ -1,7 +1,8 @@
 class Admin::CtrlFiltersController < Admin::ResourceController
-  active_scaffold :ctrl_filter
+#  active_scaffold :ctrl_filter
   layout "application_active_scaffold"
 
+=begin
   active_scaffold :ctrl_filter do |config|
 
 #    config.actions = [:update]
@@ -22,8 +23,9 @@ class Admin::CtrlFiltersController < Admin::ResourceController
     config.list.label = 'id'
     #config.columns = [:id,:code]
   end
+=end
 
-=begin
+
 
   paginate_models
 
@@ -69,6 +71,6 @@ class Admin::CtrlFiltersController < Admin::ResourceController
     flash[:notice] = t('permisson_extension.notices.security_function.destroy.success', :security_function => @id)
     redirect_to admin_security_functions_url
   end
-=end
+
 
 end

@@ -47,6 +47,12 @@ gem "factory_girl"
 gem "execjs"
 gem "therubyracer", :require => 'v8'
 #gem "therubyracer", "~> 0.8.2.pre" #bleeding edge.
+gem "grape"
+
+
+gem "jsonify"
+gem "jsonify-rails"
+gem "meta_search"
 
 #gem 'memcache-client'
 #gem 'dalli',:git => 'git://github.com/mperham/dalli.git'
@@ -55,7 +61,7 @@ gem "therubyracer", :require => 'v8'
 #gem "awesome_nested_set", :git => 'git://github.com/collectiveidea/awesome_nested_set.git', :branch => "rails2"#, :tag => "1.4.4"
 #gem 'bitmask_attributes', :git => 'git://github.com/joelmoss/bitmask_attributes.git', :tag => "v0.1.0"#, :branch => "master"
 #gem "gabrielhase-bitmask-attribute", "~> 1.0.2"
-#gem "arel" ,:git => 'git://github.com/rails/arel.git', :tag=>"v2.2.3"
+
 #gem "tinymce" ,:git => 'git://github.com/gramos/easy-fckeditor.git'
 
 #gem "active_scaffold_sortable" #,:git => 'git://github.com/vhochstein/active_scaffold_sortable.git', :branch=>"old"
@@ -100,11 +106,24 @@ gem 'seed-fu'#, '~> 1.2.0' ,:git =>'git://github.com/mbleigh/seed-fu.git'
 ########## Permission for
 gem "sequel", :git=>'git://github.com/jeremyevans/sequel.git'#,:tag=>""
 gem "sequel_pg"
+gem "arel" ,:git => 'git://github.com/rails/arel.git', :tag=>"v2.2.3"
 
 # for demo purpose
 gem 'declarative_authorization', :git => 'git://github.com/Orphist/declarative_authorization.git'
 
 #########################
+group :assets do
+  #gem 'sass-rails'#,   '~> 3.2.3'
+  #gem 'coffee-rails'#, '~> 3.2.1'
+
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem 'therubyracer', :platform => :ruby
+
+  gem 'uglifier', '>= 1.0.3'
+  #gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+  #gem 'jquery-ui-rails'
+
+end
 
 # When radiant is installed as a gem you can run all of
 # its tests and specs from an instance. If you're working

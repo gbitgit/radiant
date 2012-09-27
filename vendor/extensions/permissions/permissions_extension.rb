@@ -22,6 +22,7 @@ class PermissionsExtension < Radiant::Extension
       add_item "Data permissions", "/admin/data_permissions",:after=>"Data filters"
       add_item "Categories", "/admin/categories",:after=>"Data permissions"
       add_item "Countries", "/admin/countries",:after=>"Categories"
+      add_item "TblCountries", "/admin/tbl_countries",:after=>"Countries"
     end
 
     #Page.class_eval { include PermissionsTags }
@@ -34,6 +35,7 @@ class PermissionsExtension < Radiant::Extension
       attr_accessor :data_permissions
       attr_accessor :categories
       attr_accessor :countries
+      attr_accessor :tbl_countries
       alias_method "ctrl_filters", :ctrl_filters
       alias_method "ctrl_permissions", :ctrl_permissions
       alias_method "groups", :groups
@@ -42,6 +44,7 @@ class PermissionsExtension < Radiant::Extension
       alias_method "data_permissions", :data_permissions
       alias_method "categories", :categories
       alias_method "countries", :countries
+      alias_method "tbl_countries", :tbl_countries
     end
 
     admin.ctrl_filters = load_default_ctrl_filters_regions
@@ -52,6 +55,7 @@ class PermissionsExtension < Radiant::Extension
     admin.data_permissions = load_default_data_permissions_regions
     admin.categories = load_default_categories_regions
     admin.countries = load_default_countries_regions
+    admin.tbl_countries = load_default_countries_regions
   end
 
   def load_default_ctrl_filters_regions

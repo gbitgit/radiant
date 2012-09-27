@@ -172,7 +172,7 @@ class AdminDataController  < ApplicationController
     admin_data_is_allowed_to_update?
     @model = @klass.send(:find,params[:model_id]) rescue nil
     render :text => "<h2>#{@klass_name} Not Found: #{params[:model_id]}</h2>", :status => 404 and return if @model.nil?
-    render :file =>   "#{RAILS_ROOT}/vendor/plugins/admin_data/lib/views/show.html.erb"        
+    render :file =>   "#{RAILS_ROOT}/vendor/plugins/admin_data/lib/views/show.erb"
   end
   
   def destroy

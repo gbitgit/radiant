@@ -1,5 +1,4 @@
 class Admin::UsersController < Admin::ResourceController
-  #active_scaffold :user
 
   paginate_models
   only_allow_access_to :index, :show, :new, :create, :edit, :update, :remove, :destroy,

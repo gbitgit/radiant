@@ -118,10 +118,13 @@ class ApplicationController < ActionController::Base
   end
 end
 
-class Admin::CountriesController < Admin::ResourceController
+class Admin::TblCountriesController < Admin::ResourceController
 
 #  layout "application_flexid"
-#  layout "application"
+  layout "application_tbl"
+
+  #respond_to :html, :datatables
+
 
 #  only_allow_access_to :index, :show, :new, :create, :edit, :update, :remove, :destroy,
 #    :when => [:admin],
@@ -142,6 +145,19 @@ class Admin::CountriesController < Admin::ResourceController
   def authorize()
     conditions=params[:conditions]||{}
     conditions.merge!(:conditions => ["iso3 like ? ", 'D%' ])
+  end
+
+
+  # GET /products/search
+  def search
+    @products = TblCountry.find(params[:search],:limit => 20).paginate(:page => params[:page], :per_page=>params[:per_page])
+
+    respond_to do |format|
+      #format.html #{  }
+      format.datatables {@products}#{ render :datatables=>@products  }
+    end
+
+    respond_with @products
   end
 
   def index
@@ -170,30 +186,57 @@ class Admin::CountriesController < Admin::ResourceController
     #logger.warn Country.with_permissions_to(:read,:context => :Country, :user => user)
 
     #@countries = Country.published_only.secured
-    
-  @filters = Country::FILTERS
-  @label='Dataspy'
+    #@products = TblCountry.find(params[:search]).paginate(:page => params[:page], :per_page=>params[:per_page])
 
-  @fields = [
+  @filters2 = Country::FILTERS
+  @label2='Dataspy22'
+
+  @fields2 = [
     {:field => "iso3",      :label => "iso3"},
     {:field => "name",      :label => "name"}   ]
 
-  @conditions = [{:condition => "contains",      :label => "Contains"},{:condition => "started",      :label => "Begins"},
-      {:condition => "ended",      :label => "Ended"},{:condition => "equal",      :label => "="}]
+  @conditions2 = [{:condition => "contains2",      :label => "Contains"},{:condition => "started2",      :label => "Begins"},
+      {:condition => "ended2",      :label => "Ended"},{:condition => "equal2",      :label => "="}]
 
-  logger.warn "###########################   params='#{params}'  ####################################"
+  logger.warn "########################### INDEX  params='#{params}'  ####################################"
+  #logger.warn "########################### INDEX  caller='#{caller}'  ####################################"
 
   #    = select_tag_for_detailed_filter("countries", @label, @fields, @conditions, params)
-
-  if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
-    @countries = Country.send(params[:show])
+#####################
+@products = TblCountry.find(params[:search],:limit => 20).paginate(:page => params[:page], :per_page=>params[:per_page]);
+=begin
+    respond_to do |format|
+      format.html {
+#@products = TblCountry.find(:all)#.paginate(:page => params[:page], :per_page=>params[:per_page])
+  logger.warn "########################### INDEX  Format HTML"
+  if params[:show] && @filters2.collect{|f| f[:scope]}.include?(params[:show])
+    @countries2 = TblCountry.send(params[:show])
   elsif params[:show] #&& @filters.collect{|f| f[:scope]}.include?(params[:show])
     scope_params=split_all(params[:show])
     logger.warn  "###########################   scope.send=#{scope_params[0]}(#{scope_params[1]},#{scope_params[2]})"
-    @countries = Country.send(scope_params[0].to_sym,scope_params[1].to_sym,scope_params[2].to_s)
+    @countries2 = TblCountry.send(scope_params[0].to_sym,scope_params[1].to_sym,scope_params[2].to_s)
   else
-    @countries = Country.find(:all) #Country.contains(:iso3,"BE")
+    @countries2 = TblCountry.find(:all) #Country.contains(:iso3,"BE")
   end
+      }
+  #format.json { logger.warn "################## render :js "; render :json=>@products }
+#      format.datatables { @products = TblCountry.find(params[:search]).paginate(:page => params[:page], :per_page=>params[:per_page]) }
+    end
+  #  respond_with @products
+##############   :json=>@products
+=end
+
+  if params[:show] && @filters2.collect{|f| f[:scope]}.include?(params[:show])
+    @countries2 = TblCountry.send(params[:show])
+  elsif params[:show] #&& @filters.collect{|f| f[:scope]}.include?(params[:show])
+    scope_params=split_all(params[:show])
+    logger.warn  "###########################   scope.send=#{scope_params[0]}(#{scope_params[1]},#{scope_params[2]})"
+    @countries2 = TblCountry.send(scope_params[0].to_sym,scope_params[1].to_sym,scope_params[2].to_s)
+  else
+    logger.warn  "###########################   INDEX wo params"
+    @countries2 = TblCountry.find(:all) #Country.contains(:iso3,"BE")
+  end
+
 
 =begin
   if params[:show] && @filters.collect{|f| f[:scope]}.include?(params[:show])
@@ -210,7 +253,7 @@ class Admin::CountriesController < Admin::ResourceController
   end
 
   def show
-    @countries = Country.find(:all) #Country.find(:all)
+    @countries2 = TblCountry.find(:all) #Country.find(:all)
     #render :json => data.to_json
     #render :index
   end
